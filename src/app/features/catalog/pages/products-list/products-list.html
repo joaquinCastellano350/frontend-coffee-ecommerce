@@ -1,0 +1,26 @@
+<div class="page">
+  <header class="toolbar">
+    <h1 class="toolbar-title">Catálogo de Productos</h1>
+    <div class="filters"></div>
+  </header>
+
+  <div class="grid">
+    <mat-card *ngFor="let product of products()" class="product-card" appearance="outlined">
+      <mat-card-header class="product-card-header">
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <img mat-card-lg-image [src]="baseUrl + product.imageURL" alt="{{ product.name }}" />
+
+      <mat-card-content class="product-card-content">
+        <p>{{ product.description }}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button matButton color="primary">Añadir a la lista de deseos</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
