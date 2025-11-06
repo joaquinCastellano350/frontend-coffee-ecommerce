@@ -1,18 +1,32 @@
 <div class="page">
   <header class="toolbar">
     <h1 class="toolbar-title">Catálogo de Productos</h1>
-    <div class="filters"></div>
+    <form [formGroup]="filters" class="filters" (submit)="$event.preventDefault()">
+      <mat-form-field appearance="outline">
+        <mat-label>Buscar</mat-label>
+        <input matInput formControlName="name" placeholder="Nombre">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          Categoria
+        </mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="">Todas</mat-option>
+          <mat-option *ngFor="let c of categories()" [value]="c.slug">{{c.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
   </header>
 
-  <div class="grid">
+  <section class="grid" *ngIf="!loading(); else loadingTpl">
     <mat-card *ngFor="let product of products()" class="product-card" appearance="outlined">
       <mat-card-header class="product-card-header">
         <mat-card-title>{{ product.name }}</mat-card-title>
         <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
       </mat-card-header>
-
-      <img mat-card-lg-image [src]="baseUrl + product.imageURL" alt="{{ product.name }}" />
-
+      <a [routerLink]="['product',product._id]">
+        <img mat-card-lg-image [src]="baseUrl + product.imageURL" [alt]="product.name" />
+      </a>
       <mat-card-content class="product-card-content">
         <p>{{ product.description }}</p>
       </mat-card-content>
@@ -21,6 +35,18 @@
         <button matButton color="primary">Añadir a la lista de deseos</button>
       </mat-card-actions>
     </mat-card>
+  </section>
+  <nav class="pager" *ngIf="total()>limit()">
+    <button mat-button (click)="goPage(page()-1)" [disabled]="page()<=1">Anterior</button>
+    <span>Pagina {{page()}}</span>
+    <button mat-button (click)="goPage(page()+1)" [disabled]="page()*limit()>=total()">Siguiente</button>
+  </nav>
+
+  <ng-template #loadingTpl>
+    <div class="grid">
+    <div class="skeleton" *ngFor="let i of [1,2,3,4,5,6,7,8]"></div>
   </div>
+  </ng-template>
+
 </div>
 

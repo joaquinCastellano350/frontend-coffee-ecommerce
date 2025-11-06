@@ -6,6 +6,6 @@ export interface Product {
     stock: number;
     brand?: string;
     imageURL?: string;
-    category_id: string[];
+    category_id: {name: string};
     tags?: string[];
 }

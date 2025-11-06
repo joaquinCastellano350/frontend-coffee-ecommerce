@@ -1,23 +1,23 @@
-/* Page container */
+
 .page {
   max-width: 1200px;
+  margin:0 auto;
   margin-inline: auto;
   padding: clamp(12px, 2vw, 24px);
 }
 
-/* Header toolbar */
+
 .toolbar {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 16px;
   flex-wrap: wrap;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
-.toolbar-title { font-weight: 800; letter-spacing: .2px; font-size: clamp(1.375rem, 1.1vw + 1rem, 2rem); }
-.toolbar .filters { margin-left: auto; }
+.toolbar-title { margin-bottom: 0; font-weight: 800; letter-spacing: .2px; font-size: clamp(1.375rem, 1.1vw + 1rem, 2rem); }
+.toolbar .filters{margin-left:auto;display:flex;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
 
-/* Product grid */
 .grid {
   display: grid;
   gap: 16px;
@@ -31,7 +31,7 @@
   }
 }
 
-/* Product card */
+
 .product-card {
   border-radius: var(--radius-2);
   background: var(--surface);
@@ -45,11 +45,10 @@
   box-shadow: var(--shadow-2);
 }
 
-/* Header text inside Material card header */
 .product-card-header .mat-mdc-card-title { font-weight: 700; color: var(--text-1); }
 .product-card-header .mat-mdc-card-subtitle { color: var(--brand-700); font-weight: 600; }
 
-/* Image sizing */
+
 .product-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -57,7 +56,6 @@
   background: var(--surface-2);
 }
 
-/* Content and actions */
 .product-card-content p {
   color: var(--text-2);
   display: -webkit-box;
@@ -69,9 +67,13 @@
   padding: 12px 16px 16px 16px;
 }
 
-/* Button polish without overriding theme */
+
 button[matButton] {
   border-radius: 999px;
   padding-inline: 14px;
   font-weight: 600;
 }
+
+.skeleton{height:320px;border-radius:14px;background:linear-gradient(90deg,#eee 25%,#f5f5f5 37%,#eee 63%);background-size:400% 100%;animation:shimmer 1.2s infinite linear}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.pager{display:flex;gap:8px;justify-content:center;margin:16px 0}
