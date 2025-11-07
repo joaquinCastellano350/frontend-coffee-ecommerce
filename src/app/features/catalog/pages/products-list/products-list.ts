@@ -11,10 +11,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { WishlistService } from '../../../wishlist/wishlist.service';
+import { ProductListComponent } from '../../components/product-list-component/product-list-component';
 
 @Component({
   selector: 'app-products-list',
-  imports: [CommonModule, NgFor, MatCardModule, MatButton, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, RouterLink],
+  imports: [CommonModule, NgFor, MatCardModule, MatButton, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, RouterLink, ProductListComponent],
   templateUrl: './products-list.html',
   styleUrl: './products-list.css',
 })
@@ -24,8 +26,9 @@ export class ProductsList {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   baseUrl = 'http://localhost:3000';
-
-
+  
+  wishlist = inject(WishlistService);
+  
   products = signal<Product[]>([]);
   total = signal(0);
   page = signal(1);
@@ -83,7 +86,6 @@ export class ProductsList {
       this.products.set(res.products);
       this.total.set(res.total);
       this.loading.set(false);
-      console.log(this.products())
     })
   }
 

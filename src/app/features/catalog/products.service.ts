@@ -36,6 +36,11 @@ export class ProductsService extends BaseHttpService {
         return this.http.get<Product>(`${this.baseUrl}/api/products/${id}`);
     }
 
+    getManyByIds(ids: string[]): Observable<Product[]> {
+        const params = new HttpParams().set('ids', ids.join(','));
+        return this.http.get<Product[]>(`${this.baseUrl}/api/wishlist/local`, { params });
+    }
+
     getCategories() {
         return this.http.get<{name:string , slug:string}[]>(`${this.baseUrl}/api/categories`);
     }

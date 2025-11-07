@@ -7,6 +7,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { MatCardModule } from "@angular/material/card";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFabButton, MatAnchor } from '@angular/material/button';
+import { WishlistService } from '../../../wishlist/wishlist.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,11 +19,11 @@ export class ProductDetail {
   private service = inject(ProductsService)
   private route = inject(ActivatedRoute)
 
+  wishlist = inject(WishlistService)
   baseUrl = 'http://localhost:3000'
   product = signal<Product | null>(null)
   image = signal<string>('assets/placeholder.png')
   category = signal<{name:string}>({name: 'default'})
-  wished = signal(false)
 
   constructor() {
     const id = this.route.snapshot.paramMap.get('id')!;
@@ -34,5 +35,4 @@ export class ProductDetail {
     })
   }
 
-  toggleWishlist(){this.wished.set(!this.wished())}
 }

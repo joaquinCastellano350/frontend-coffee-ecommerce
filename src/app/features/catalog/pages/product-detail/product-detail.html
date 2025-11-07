@@ -32,9 +32,9 @@
           </div>
 
           <div class="actions">
-            <button matFab extended (click)="toggleWishlist()" color="accent" class="wishlist-button">
-              <mat-icon>{{ wished() ? 'favorite' : 'favorite_border' }}</mat-icon>
-              {{ wished() ? 'En lista de deseos' : 'Añadir a lista de deseos' }}
+            <button matFab extended (click)="wishlist.toggle(product()?._id ?? '')" color="accent" class="wishlist-button">
+              <mat-icon>{{ wishlist.has(product()?._id ?? '') ? 'favorite' : 'favorite_border' }}</mat-icon>
+              {{ wishlist.has(product()?._id ?? '') ? 'En lista de deseos' : 'Añadir a lista de deseos' }}
             </button>
             <button matFab extended class="contact-button">
               <mat-icon>call</mat-icon>

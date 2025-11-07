@@ -17,36 +17,10 @@
       </mat-form-field>
     </form>
   </header>
-
-  <section class="grid" *ngIf="!loading(); else loadingTpl">
-    <mat-card *ngFor="let product of products()" class="product-card" appearance="outlined">
-      <mat-card-header class="product-card-header">
-        <mat-card-title>{{ product.name }}</mat-card-title>
-        <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
-      </mat-card-header>
-      <a [routerLink]="['product',product._id]">
-        <img mat-card-lg-image [src]="baseUrl + product.imageURL" [alt]="product.name" />
-      </a>
-      <mat-card-content class="product-card-content">
-        <p>{{ product.description }}</p>
-      </mat-card-content>
-
-      <mat-card-actions>
-        <button matButton color="primary">Añadir a la lista de deseos</button>
-      </mat-card-actions>
-    </mat-card>
-  </section>
+  <app-product-list-component [products]="products()"></app-product-list-component>
   <nav class="pager" *ngIf="total()>limit()">
     <button mat-button (click)="goPage(page()-1)" [disabled]="page()<=1">Anterior</button>
     <span>Pagina {{page()}}</span>
     <button mat-button (click)="goPage(page()+1)" [disabled]="page()*limit()>=total()">Siguiente</button>
   </nav>
-
-  <ng-template #loadingTpl>
-    <div class="grid">
-    <div class="skeleton" *ngFor="let i of [1,2,3,4,5,6,7,8]"></div>
-  </div>
-  </ng-template>
-
 </div>
-
