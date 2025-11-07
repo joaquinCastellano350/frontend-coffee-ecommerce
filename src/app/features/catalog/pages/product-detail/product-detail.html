@@ -32,10 +32,6 @@
           </div>
 
           <div class="actions">
-            <button matFab extended color="primary" class="buy-button">
-              <mat-icon>shopping_cart</mat-icon>
-              Agregar al carrito
-            </button>
             <button matFab extended (click)="toggleWishlist()" color="accent" class="wishlist-button">
               <mat-icon>{{ wished() ? 'favorite' : 'favorite_border' }}</mat-icon>
               {{ wished() ? 'En lista de deseos' : 'Añadir a lista de deseos' }}
