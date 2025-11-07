@@ -1,0 +1,55 @@
+<div class="page">
+  <ng-container *ngIf="product(); else loadingTpl">
+    <mat-card class="product-card" appearance="outlined">
+      <div class="product-layout">
+        <div class="media">
+          <img class="product-image" [src]="baseUrl + image()" [alt]="product()?.name" />
+        </div>
+        <div class="details">
+          <div class="breadcrumbs">
+            {{ this.product()?.category_id?.name }}
+          </div>
+
+          <h1 class="title">{{ product()?.name }}</h1>
+
+          <div *ngIf="product()?.brand" class="brand-rating">
+            <span class="brand">{{ product()?.brand }}</span>
+          </div>
+
+          <p class="description" *ngIf="product()?.description">
+            {{ product()?.description }}
+          </p>
+
+          <div class="tags" *ngIf="product()?.tags">
+            <span class="tag">{{ product()?.tags }}</span>
+          </div>
+
+          <div class="price-stock">
+            <div class="price">${{ product()?.price }}</div>
+            <div class="stock" [class.low]="(product()?.stock || 0) < 5">
+              {{ (product()?.stock || 0) > 0 ? ('Disponibles: ' + product()?.stock) : 'Sin stock' }}
+            </div>
+          </div>
+
+          <div class="actions">
+            <button matFab extended (click)="wishlist.toggle(product()?._id ?? '')" color="accent" class="wishlist-button">
+              <mat-icon>{{ wishlist.has(product()?._id ?? '') ? 'favorite' : 'favorite_border' }}</mat-icon>
+              {{ wishlist.has(product()?._id ?? '') ? 'En lista de deseos' : 'Añadir a lista de deseos' }}
+            </button>
+            <button matFab extended class="contact-button">
+              <mat-icon>call</mat-icon>
+              Contactar vendedor
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </mat-card>
+  </ng-container>
+
+  <ng-template #loadingTpl>
+    <div class="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</div>

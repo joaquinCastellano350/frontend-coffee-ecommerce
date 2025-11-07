@@ -1,0 +1,21 @@
+
+.page {
+  max-width: 1200px;
+  margin:0 auto;
+  margin-inline: auto;
+  padding: clamp(12px, 2vw, 24px);
+}
+
+
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.toolbar-title { margin-bottom: 0; font-weight: 800; letter-spacing: .2px; font-size: clamp(1.375rem, 1.1vw + 1rem, 2rem); }
+.toolbar .filters{margin-left:auto;display:flex;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+
+.pager{display:flex;gap:8px;justify-content:center;margin:16px 0}

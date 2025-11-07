@@ -1,0 +1,26 @@
+<div class="page">
+  <header class="toolbar">
+    <h1 class="toolbar-title">Catálogo de Productos</h1>
+    <form [formGroup]="filters" class="filters" (submit)="$event.preventDefault()">
+      <mat-form-field appearance="outline">
+        <mat-label>Buscar</mat-label>
+        <input matInput formControlName="name" placeholder="Nombre">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          Categoria
+        </mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="">Todas</mat-option>
+          <mat-option *ngFor="let c of categories()" [value]="c.slug">{{c.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </header>
+  <app-product-list-component [products]="products()"></app-product-list-component>
+  <nav class="pager" *ngIf="total()>limit()">
+    <button mat-button (click)="goPage(page()-1)" [disabled]="page()<=1">Anterior</button>
+    <span>Pagina {{page()}}</span>
+    <button mat-button (click)="goPage(page()+1)" [disabled]="page()*limit()>=total()">Siguiente</button>
+  </nav>
+</div>
