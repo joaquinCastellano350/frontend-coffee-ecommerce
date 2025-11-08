@@ -71,8 +71,14 @@ export class AdminProductForm {
 
   loadProduct(id: string) {
     this.service.getProductById(id).subscribe((product) => {
+      if (product.imageURL) {
+        this.imagePreview = `http://localhost:3000${product.imageURL}`;
+      }
+      this.lastCatalogId = product.catalog_id?._id || null;
+      this.lastCategoryId = product.category_id?._id || null;
 
       this.form.patchValue({...product , category_id: product.category_id?._id , catalog_id: product.catalog_id?._id });
+      console.log(product);
     },
     (error) => {
       this.snack.open('Error al cargar el producto', 'Cerrar', { duration: 3000 });
@@ -86,11 +92,8 @@ export class AdminProductForm {
     }
     const productData = this.form.value;
 
-    const ok = await this.ensureCatalogEnabled();
-    if (!ok) {
-      return;
-    }
-
+    await this.ensureCatalogEnabled();
+    
 
 
     const request = this.isEdit() ? this.service.updateProduct(this.id!, productData as UpdateProductDTO, this.selectedFile || undefined) : this.service.createProduct(productData as CreateProductDTO, this.selectedFile || undefined);
@@ -139,6 +142,7 @@ export class AdminProductForm {
 }
 
 async ensureCatalogEnabled() : Promise<boolean> {
+  console.log(this.form.value.catalog_id);
   const catalogId = this.form.value.catalog_id as string;
 
   const catalog = this.catalogs().find(c => c._id === catalogId);
@@ -152,7 +156,7 @@ async ensureCatalogEnabled() : Promise<boolean> {
       message: `El catálogo “${catalog?.name}” no está activo. ¿Deseás activarlo ahora? 
                 (Se desactivarán los demás catálogos)`,
       confirmText: 'Activar y continuar',
-      cancelText: 'Cancelar'
+      cancelText: 'Continuar sin activarlo'
     }
   });
   const confirm = await ref.afterClosed().toPromise();

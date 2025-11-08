@@ -5,6 +5,8 @@ import { Product } from '../../../../shared/models/product.model';
 import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog-component/confirm-dialog-component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-admin-products-list',
   imports: [MatIcon , MatButtonModule, MatTableModule],
@@ -14,6 +16,8 @@ import { MatTableModule } from '@angular/material/table';
 export class AdminProductsList {
   private service = inject(ProductsService);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
+
 
   products = signal<Product[]>([]);
   loading = signal(true);
@@ -45,16 +49,25 @@ export class AdminProductsList {
     this.router.navigate([`/admin/products/edit/${id}`]);
   }
 
-  deleteProduct(id: string) {
-    if (confirm('Estas seguro de eliminar este producto?')) {
-      this.service.deleteProduct(id).subscribe({
-        next: () => {
-          this.loadProducts();
-        },
-        error: (error) => {
-          console.error('Error al eliminar el producto:', error);
-        },
-      });
+  async deleteProduct(id: string) {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
+    width: '420px',
+    data: {
+      title: 'Eliminar producto',
+      message: '¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.',
+      confirmText: 'Eliminar',
+      cancelText: 'Cancelar'
     }
-  }
+  });
+  const confirm = await ref.afterClosed().toPromise();
+  if (!confirm) return;
+
+  this.service.deleteProduct(id).subscribe({
+    next: () => {
+      this.loadProducts();
+    },
+    error: (error) => {
+      console.error('Error al eliminar el producto:', error);
+    },
+  });}
 }

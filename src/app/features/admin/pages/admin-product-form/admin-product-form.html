@@ -29,7 +29,6 @@
                 <mat-select formControlName="catalog_id" (selectionChange)="onCatalogChange($event.value)">
                     <mat-option *ngFor="let c of catalogs()" [value]="c._id">{{c.name}}</mat-option>
                     <mat-option value="__create__">Crear</mat-option>
-
                 </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline">
