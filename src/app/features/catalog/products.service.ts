@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Product } from "../../shared/models/product.model";
+import { CreateProductDTO, Product, UpdateProductDTO } from "../../shared/models/product.model";
 import { BaseHttpService } from "../../core/http/base-http.service";
 import { HttpParams } from "@angular/common/http";
 
@@ -35,10 +35,24 @@ export class ProductsService extends BaseHttpService {
     getProductById(id: string): Observable<Product> {
         return this.http.get<Product>(`${this.baseUrl}/api/products/${id}`);
     }
-
+    getAllProducts(): Observable<Product[]> {
+        return this.http.get<Product[]>(`${this.baseUrl}/api/products`);
+    }
     getManyByIds(ids: string[]): Observable<Product[]> {
         const params = new HttpParams().set('ids', ids.join(','));
         return this.http.get<Product[]>(`${this.baseUrl}/api/wishlist/local`, { params });
+    }
+
+    createProduct(product: CreateProductDTO): Observable<Product> {
+        return this.http.post<Product>(`${this.baseUrl}/api/products`, product);
+    }
+
+    updateProduct(id: string, product: UpdateProductDTO): Observable<Product> {
+        return this.http.put<Product>(`${this.baseUrl}/api/products/${id}`, product);
+    }
+
+    deleteProduct(id: string): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}/api/products/${id}`);
     }
 
     getCategories() {

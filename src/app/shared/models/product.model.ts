@@ -7,5 +7,30 @@ export interface Product {
     brand?: string;
     imageURL?: string;
     category_id: {name: string};
+    catalog_id?: {name: string, visible: boolean};
+    tags?: string[];
+}
+
+export interface CreateProductDTO {
+    name: string;
+    description?: string;
+    price: number;
+    stock: number;
+    brand?: string;
+    imageURL?: string;
+    category_id: string;
+    catalog_id: string;
+    tags?: string[];
+}
+
+export interface UpdateProductDTO {
+    name?: string;
+    description?: string;
+    price?: number;
+    stock?: number;
+    brand?: string;
+    imageURL?: string;
+    category_id?: string;
+    catalog_id?: string;
     tags?: string[];
 }
