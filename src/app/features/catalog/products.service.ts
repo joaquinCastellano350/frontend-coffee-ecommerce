@@ -43,12 +43,24 @@ export class ProductsService extends BaseHttpService {
         return this.http.get<Product[]>(`${this.baseUrl}/api/wishlist/local`, { params });
     }
 
-    createProduct(product: CreateProductDTO): Observable<Product> {
-        return this.http.post<Product>(`${this.baseUrl}/api/products`, product);
+    createProduct(product: CreateProductDTO, file?: File): Observable<Product> {
+        const formData = new FormData();
+        Object.entries(product).forEach(([key, value]) => {
+            formData.append(key, value as string);
+        });
+        if (file) formData.append('image', file);
+
+        return this.http.post<Product>(`${this.baseUrl}/api/products`, formData);
     }
 
-    updateProduct(id: string, product: UpdateProductDTO): Observable<Product> {
-        return this.http.put<Product>(`${this.baseUrl}/api/products/${id}`, product);
+    updateProduct(id: string, product: UpdateProductDTO, file?: File): Observable<Product> {
+        const formData = new FormData();
+        Object.entries(product).forEach(([key, value]) => {
+            formData.append(key, value as string);
+        });
+        if (file) formData.append('image', file);
+
+        return this.http.put<Product>(`${this.baseUrl}/api/products/${id}`, formData);
     }
 
     deleteProduct(id: string): Observable<void> {

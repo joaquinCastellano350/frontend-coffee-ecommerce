@@ -39,6 +39,8 @@ export class AdminProductForm {
 
   isEdit = signal(false);
   id: string | null = null;
+  selectedFile: File | null = null;
+  imagePreview: string | null = null;
 
   form = this.fb.group({
     name: ['', Validators.required],
@@ -91,7 +93,7 @@ export class AdminProductForm {
 
 
 
-    const request = this.isEdit() ? this.service.updateProduct(this.id!, productData as UpdateProductDTO) : this.service.createProduct(productData as CreateProductDTO);
+    const request = this.isEdit() ? this.service.updateProduct(this.id!, productData as UpdateProductDTO, this.selectedFile || undefined) : this.service.createProduct(productData as CreateProductDTO, this.selectedFile || undefined);
     
     request.subscribe({
       next: () => {
@@ -194,4 +196,18 @@ private openQuickCreate(title: string, label: string): Promise<string | null> {
   return ref.afterClosed().toPromise();
 }
 
+onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0] || null;
+  this.selectedFile = file;
+  if (file) {
+    this.imagePreview = URL.createObjectURL(file);
+  } else {
+    this.imagePreview = null;
+  }
+}
+  clearImage() {
+    this.selectedFile = null;
+    this.imagePreview = null;
+  }
 }
