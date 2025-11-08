@@ -12,6 +12,7 @@ import { CreateProductDTO, UpdateProductDTO } from '../../../../shared/models/pr
 import { CategoriesService } from '../../services/categories.service';
 import { CatalogsService } from '../../services/catalogs.servicec';
 import { QuickCreateDialogComponent } from '../../components/quick-create-dialog-component/quick-create-dialog-component';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog-component/confirm-dialog-component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -53,10 +54,11 @@ export class AdminProductForm {
   ngOnInit() {
     this.service.getCategories().subscribe((cats) => {
       this.categories.set(cats);
-      console.log(cats);
+
     });
     this.catalogService.getCatalogs().subscribe((cats) => {
       this.catalogs.set(cats);
+
     });
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
@@ -68,7 +70,7 @@ export class AdminProductForm {
   loadProduct(id: string) {
     this.service.getProductById(id).subscribe((product) => {
 
-      this.form.patchValue({...product , category_id: product.category_id?._id , catalog_id: product.catalog_id?._id , });
+      this.form.patchValue({...product , category_id: product.category_id?._id , catalog_id: product.catalog_id?._id });
     },
     (error) => {
       this.snack.open('Error al cargar el producto', 'Cerrar', { duration: 3000 });
@@ -76,11 +78,18 @@ export class AdminProductForm {
     );
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.form.invalid) {
       return;
     }
     const productData = this.form.value;
+
+    const ok = await this.ensureCatalogEnabled();
+    if (!ok) {
+      return;
+    }
+
+
 
     const request = this.isEdit() ? this.service.updateProduct(this.id!, productData as UpdateProductDTO) : this.service.createProduct(productData as CreateProductDTO);
     
@@ -127,11 +136,42 @@ export class AdminProductForm {
   });
 }
 
+async ensureCatalogEnabled() : Promise<boolean> {
+  const catalogId = this.form.value.catalog_id as string;
+
+  const catalog = this.catalogs().find(c => c._id === catalogId);
+  if (catalog && catalog.visible) {
+    return true;
+  }
+  const ref = this.dialog.open(ConfirmDialogComponent, {
+    width: '420px',
+    data: {
+      title: 'Catálogo inactivo',
+      message: `El catálogo “${catalog?.name}” no está activo. ¿Deseás activarlo ahora? 
+                (Se desactivarán los demás catálogos)`,
+      confirmText: 'Activar y continuar',
+      cancelText: 'Cancelar'
+    }
+  });
+  const confirm = await ref.afterClosed().toPromise();
+  if (!confirm) return false;
+  try {
+    await this.catalogService.enableCatalog(catalogId).toPromise();
+    this.catalogs.set(this.catalogs().map(c => ({...c, visible: c._id === catalogId})));
+    this.snack.open('Catálogo activado', 'Cerrar', { duration: 2000 });
+    return true;
+  } catch (error) {
+    this.snack.open('Error al activar el catálogo', 'Cerrar', { duration: 3000 });
+    return false;
+  }
+}
+
+
 async onCatalogChange(value: string) {
   if (value !== '__create__') { this.lastCatalogId = value; return; }
 
   const name = await this.openQuickCreate('Nuevo catálogo', 'Nombre del catálogo');
-  if (!name) { this.form.patchValue({ catalog_id: this.lastCatalogId }); return; }
+  if (!name) { this.form.patchValue({ catalog_id: this.lastCatalogId || '' }); return; }
 
   this.catalogService.createCatalog(name).subscribe({
     next: (cat) => {
@@ -142,7 +182,7 @@ async onCatalogChange(value: string) {
     },
     error: () => {
       this.snack.open('No se pudo crear el catálogo', 'Cerrar', { duration: 3000 });
-      this.form.patchValue({ catalog_id: this.lastCatalogId });
+      this.form.patchValue({ catalog_id:  this.lastCatalogId || '' });
     }
   });
 }

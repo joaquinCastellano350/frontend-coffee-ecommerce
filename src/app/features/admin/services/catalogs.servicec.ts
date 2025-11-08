@@ -13,4 +13,8 @@ export class CatalogsService {
     createCatalog(name: string, visible: boolean = false) {
         return this.http.post<{name:string, slug:string, _id:string, visible:boolean}>(`${this.baseUrl}`, {name, visible});
     }
+
+    enableCatalog(id: string) {
+        return this.http.patch<{name:string, slug:string, _id:string, visible:boolean}>(`${this.baseUrl}/id/${id}/enable`, {});
+    }
 }

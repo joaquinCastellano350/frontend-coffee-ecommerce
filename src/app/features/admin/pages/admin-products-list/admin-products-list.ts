@@ -46,13 +46,13 @@ export class AdminProductsList {
   }
 
   deleteProduct(id: string) {
-    if (confirm('Are you sure you want to delete this product?')) {
+    if (confirm('Estas seguro de eliminar este producto?')) {
       this.service.deleteProduct(id).subscribe({
         next: () => {
           this.loadProducts();
         },
         error: (error) => {
-          console.error('Error deleting product:', error);
+          console.error('Error al eliminar el producto:', error);
         },
       });
     }
