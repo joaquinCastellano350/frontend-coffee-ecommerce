@@ -14,10 +14,13 @@ import { CatalogsService } from '../../services/catalogs.servicec';
 import { QuickCreateDialogComponent } from '../../components/quick-create-dialog-component/quick-create-dialog-component';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog-component/confirm-dialog-component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
 @Component({
   selector: 'app-admin-product-form',
-  imports: [CommonModule,ReactiveFormsModule,MatButtonModule,MatInputModule,MatSelectModule,MatCardModule,MatSnackBarModule, QuickCreateDialogComponent],
+  imports: [CommonModule,ReactiveFormsModule,MatButtonModule,MatInputModule,MatSelectModule,MatCardModule,MatSnackBarModule, MatChipsModule, MatIconModule],
   templateUrl: './admin-product-form.html',
   styleUrl: './admin-product-form.css',
 })
@@ -41,6 +44,8 @@ export class AdminProductForm {
   id: string | null = null;
   selectedFile: File | null = null;
   imagePreview: string | null = null;
+  separatorKeys = [ENTER, COMMA];
+
 
   form = this.fb.group({
     name: ['', Validators.required],
@@ -50,6 +55,7 @@ export class AdminProductForm {
     description: [''],
     price: [0, Validators.min(0)],
     stock: [0, Validators.min(0)],
+    tags: this.fb.control<string[]>([]),
     imageUrl: [''],
   });
 
@@ -74,8 +80,6 @@ export class AdminProductForm {
       if (product.imageURL) {
         this.imagePreview = `http://localhost:3000${product.imageURL}`;
       }
-      this.lastCatalogId = product.catalog_id?._id || null;
-      this.lastCategoryId = product.category_id?._id || null;
 
       this.form.patchValue({...product , category_id: product.category_id?._id , catalog_id: product.catalog_id?._id });
       console.log(product);
@@ -198,6 +202,31 @@ private openQuickCreate(title: string, label: string): Promise<string | null> {
     width: '380px'
   });
   return ref.afterClosed().toPromise();
+}
+
+addTag(event: MatChipInputEvent) {
+  const inputValue = (event.value || '').trim();
+  if (!inputValue) {
+    return;
+  }
+
+  const value = inputValue.toLowerCase();
+  const ctrl = this.form.controls['tags'];
+  const current = ctrl.value as string[];
+  if (!current.includes(value)) {
+    ctrl.setValue([...current, value]);
+    ctrl.markAsDirty();
+  }
+
+  event.chipInput?.clear();
+}
+
+removeTag(index: number) {
+  const ctrl = this.form.controls['tags'];
+  const current = ctrl.value as string[];
+  current.splice(index, 1);
+  ctrl.setValue([...current]);
+  ctrl.markAsDirty();
 }
 
 onFileSelected(event: Event) {
