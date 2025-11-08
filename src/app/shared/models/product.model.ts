@@ -6,8 +6,8 @@ export interface Product {
     stock: number;
     brand?: string;
     imageURL?: string;
-    category_id: {name: string};
-    catalog_id?: {name: string, visible: boolean};
+    category_id: {name: string, _id: string};
+    catalog_id?: {name: string, visible: boolean, _id: string};
     tags?: string[];
 }
 

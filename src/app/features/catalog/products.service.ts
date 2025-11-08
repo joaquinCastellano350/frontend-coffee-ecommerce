@@ -56,6 +56,6 @@ export class ProductsService extends BaseHttpService {
     }
 
     getCategories() {
-        return this.http.get<{name:string , slug:string}[]>(`${this.baseUrl}/api/categories`);
+        return this.http.get<{name:string , slug:string, _id:string}[]>(`${this.baseUrl}/api/categories`);
     }
 }

@@ -9,19 +9,32 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProductsService } from '../../../catalog/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateProductDTO, UpdateProductDTO } from '../../../../shared/models/product.model';
+import { CategoriesService } from '../../services/categories.service';
+import { CatalogsService } from '../../services/catalogs.servicec';
+import { QuickCreateDialogComponent } from '../../components/quick-create-dialog-component/quick-create-dialog-component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin-product-form',
-  imports: [CommonModule,ReactiveFormsModule,MatButtonModule,MatInputModule,MatSelectModule,MatCardModule,MatSnackBarModule],
+  imports: [CommonModule,ReactiveFormsModule,MatButtonModule,MatInputModule,MatSelectModule,MatCardModule,MatSnackBarModule, QuickCreateDialogComponent],
   templateUrl: './admin-product-form.html',
   styleUrl: './admin-product-form.css',
 })
 export class AdminProductForm {
+  private dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
+  private categoryService = inject(CategoriesService);
+  private catalogService = inject(CatalogsService);
   private service = inject(ProductsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private snack = inject(MatSnackBar);
+
+  categories = signal<{name:string , slug:string, _id:string}[]>([]);
+  catalogs = signal<{name:string , slug:string, _id:string, visible:boolean}[]>([]);
+
+  private lastCategoryId: string | null = null;
+  private lastCatalogId: string | null = null;
 
   isEdit = signal(false);
   id: string | null = null;
@@ -29,7 +42,8 @@ export class AdminProductForm {
   form = this.fb.group({
     name: ['', Validators.required],
     brand: [''],
-    category: [''],
+    category_id: [''],
+    catalog_id: [''],
     description: [''],
     price: [0, Validators.min(0)],
     stock: [0, Validators.min(0)],
@@ -37,6 +51,13 @@ export class AdminProductForm {
   });
 
   ngOnInit() {
+    this.service.getCategories().subscribe((cats) => {
+      this.categories.set(cats);
+      console.log(cats);
+    });
+    this.catalogService.getCatalogs().subscribe((cats) => {
+      this.catalogs.set(cats);
+    });
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.isEdit.set(true);
@@ -46,7 +67,8 @@ export class AdminProductForm {
 
   loadProduct(id: string) {
     this.service.getProductById(id).subscribe((product) => {
-      this.form.patchValue(product);
+
+      this.form.patchValue({...product , category_id: product.category_id?._id , catalog_id: product.catalog_id?._id , });
     },
     (error) => {
       this.snack.open('Error al cargar el producto', 'Cerrar', { duration: 3000 });
@@ -80,4 +102,56 @@ export class AdminProductForm {
       }
     });
   }
+
+
+
+  async onCategoryChange(value: string) {
+  if (value !== '__create__') { this.lastCategoryId = value; return; }
+
+
+  const name = await this.openQuickCreate('Nueva categoría', 'Nombre de la categoría');
+
+  if (!name) { this.form.patchValue({ category_id: this.lastCategoryId }); return; }
+
+  this.categoryService.createCategory(name).subscribe({
+    next: (cat) => {
+      this.categories.set([...this.categories(), cat]);
+      this.form.patchValue({ category_id: cat._id });
+      this.lastCategoryId = cat._id;
+      this.snack.open('Categoría creada', 'Cerrar', { duration: 2000 });
+    },
+    error: () => {
+      this.snack.open('No se pudo crear la categoría', 'Cerrar', { duration: 3000 });
+      this.form.patchValue({ category_id: this.lastCategoryId });
+    }
+  });
+}
+
+async onCatalogChange(value: string) {
+  if (value !== '__create__') { this.lastCatalogId = value; return; }
+
+  const name = await this.openQuickCreate('Nuevo catálogo', 'Nombre del catálogo');
+  if (!name) { this.form.patchValue({ catalog_id: this.lastCatalogId }); return; }
+
+  this.catalogService.createCatalog(name).subscribe({
+    next: (cat) => {
+      this.catalogs.set([...this.catalogs(), cat]);
+      this.form.patchValue({ catalog_id: cat._id });
+      this.lastCatalogId = cat._id;
+      this.snack.open('Catálogo creado', 'Cerrar', { duration: 2000 });
+    },
+    error: () => {
+      this.snack.open('No se pudo crear el catálogo', 'Cerrar', { duration: 3000 });
+      this.form.patchValue({ catalog_id: this.lastCatalogId });
+    }
+  });
+}
+private openQuickCreate(title: string, label: string): Promise<string | null> {
+  const ref = this.dialog.open(QuickCreateDialogComponent, {
+    data: { title, label },
+    width: '380px'
+  });
+  return ref.afterClosed().toPromise();
+}
+
 }
