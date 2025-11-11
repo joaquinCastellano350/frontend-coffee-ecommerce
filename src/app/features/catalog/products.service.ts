@@ -29,14 +29,14 @@ export class ProductsService extends BaseHttpService {
                 params = params.set(key, value.toString());
             }
         });
-        return this.http.get<Paged<Product>>(`${this.baseUrl}/api/catalogs/products`, { params });
+        return this.http.get<Paged<Product>>(`${this.baseUrl}/catalogs/products`, { params });
     }
 
     getProductById(id: string): Observable<Product> {
-        return this.http.get<Product>(`${this.baseUrl}/api/products/${id}`);
+        return this.http.get<Product>(`${this.baseUrl}/products/${id}`);
     }
 
     getCategories() {
-        return this.http.get<{name:string , slug:string}[]>(`${this.baseUrl}/api/categories`);
+        return this.http.get<{name:string , slug:string}[]>(`${this.baseUrl}/categories`);
     }
 }

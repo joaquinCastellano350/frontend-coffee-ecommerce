@@ -1,9 +1,19 @@
+<header class="topbar">
+    <a routerLink="/">Home</a>
+    <span class="spacer"></span>
+
+    <ng-container *ngIf="!auth.loading(); else cargando">
+    <ng-container *ngIf="auth.user(); else anon">
+        Hola, {{ auth.user()!.email }}
+        <a routerLink="/admin/products" *ngIf="auth.isAdmin()">Admin</a>
+    </ng-container>
+    <ng-template #anon>
+        <a routerLink="/login">Ingresar</a>
+        <a routerLink="/register">Registrarse</a>
+    </ng-template>
+    </ng-container>
+
+    <ng-template #cargando>cargando…</ng-template>
+</header>
 
 <router-outlet />
-<mat-toolbar color="primary">
-  <span class="logo" routerLink="/">🛍️ MyShop</span>
-  <span class="spacer"></span>
-
-  <button mat-button routerLink="/auth/login">Login</button>
-</mat-toolbar>
-
