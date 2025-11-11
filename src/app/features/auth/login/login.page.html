@@ -1,0 +1,42 @@
+<div class="page">
+    <mat-card class="card">
+      <h1>{{ isRegister() ? 'Crear cuenta' : 'Iniciar sesión'}}</h1>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" autocomplete="email">
+          <mat-error *ngIf="form.controls.email.invalid && form.controls.email.touched">
+            Ingresá un email válido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password" type="password" autocomplete="current-password">
+          <mat-error *ngIf="form.controls.password.invalid && form.controls.password.touched">
+            Mínimo 8 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="isRegister()" appearance="outline" class="full">
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input matInput formControlName="confirm" type="password" autocomplete="new-password">
+          <mat-error *ngIf="form.hasError('mismatch') && form.controls.confirm.touched">
+            Las contraseñas no coinciden
+          </mat-error>
+        </mat-form-field>
+
+        <div class="actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading">
+                {{ loading ? 'Ingresando…' : 'Ingresar' }}
+            </button>
+            <button mat-button type="button"
+                [routerLink]="isRegister() ? '/login' : '/register'">
+                {{ isRegister() ? '¿Ya tenés cuenta? Ingresá' : '¿No tenés cuenta? Registrate' }}
+            </button>
+
+        </div>
+      </form>
+    </mat-card>
+  </div>

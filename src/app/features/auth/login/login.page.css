@@ -1,0 +1,4 @@
+ .page{ display:grid; place-items:center; padding:24px }
+    .card{ width:100%; max-width:420px; padding:16px }
+    .full{ width:100% }
+    .actions{ display:flex; justify-content:space-between; align-items:center; margin-top:8px; gap:8px }
