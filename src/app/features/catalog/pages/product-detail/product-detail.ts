@@ -20,7 +20,6 @@ export class ProductDetail {
   private route = inject(ActivatedRoute)
 
   wishlist = inject(WishlistService)
-  baseUrl = 'http://localhost:3000'
   product = signal<Product | null>(null)
   image = signal<string>('assets/placeholder.png')
  

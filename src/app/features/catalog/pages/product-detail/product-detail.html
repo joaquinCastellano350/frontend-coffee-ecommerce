@@ -3,7 +3,7 @@
     <mat-card class="product-card" appearance="outlined">
       <div class="product-layout">
         <div class="media">
-          <img class="product-image" [src]="baseUrl + image()" [alt]="product()?.name" />
+          <img class="product-image" [src]="'/uploads' + image()" [alt]="product()?.name" />
         </div>
         <div class="details">
           <div class="breadcrumbs">

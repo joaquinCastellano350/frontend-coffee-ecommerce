@@ -78,7 +78,7 @@ export class AdminProductForm {
   loadProduct(id: string) {
     this.service.getProductById(id).subscribe((product) => {
       if (product.imageURL) {
-        this.imagePreview = `http://localhost:3000${product.imageURL}`;
+        this.imagePreview = `uploads${product.imageURL}`;
       }
 
       this.form.patchValue({...product , category_id: product.category_id?._id , catalog_id: product.catalog_id?._id });

@@ -25,7 +25,6 @@ export class ProductsList {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  baseUrl = 'http://localhost:3000';
   
   wishlist = inject(WishlistService);
   

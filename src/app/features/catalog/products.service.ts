@@ -36,11 +36,11 @@ export class ProductsService extends BaseHttpService {
         return this.http.get<Product>(`${this.baseUrl}/products/${id}`);
     }
     getAllProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>(`${this.baseUrl}/api/products`);
+        return this.http.get<Product[]>(`${this.baseUrl}/products`);
     }
     getManyByIds(ids: string[]): Observable<Product[]> {
         const params = new HttpParams().set('ids', ids.join(','));
-        return this.http.get<Product[]>(`${this.baseUrl}/api/wishlist/local`, { params });
+        return this.http.get<Product[]>(`${this.baseUrl}/wishlist/local`, { params });
     }
 
     createProduct(product: CreateProductDTO, file?: File): Observable<Product> {
@@ -50,7 +50,7 @@ export class ProductsService extends BaseHttpService {
         });
         if (file) formData.append('image', file);
 
-        return this.http.post<Product>(`${this.baseUrl}/api/products`, formData);
+        return this.http.post<Product>(`${this.baseUrl}/products`, formData);
     }
 
     updateProduct(id: string, product: UpdateProductDTO, file?: File): Observable<Product> {
@@ -60,11 +60,11 @@ export class ProductsService extends BaseHttpService {
         });
         if (file) formData.append('image', file);
 
-        return this.http.put<Product>(`${this.baseUrl}/api/products/${id}`, formData);
+        return this.http.put<Product>(`${this.baseUrl}/products/${id}`, formData);
     }
 
     deleteProduct(id: string): Observable<void> {
-        return this.http.delete<void>(`${this.baseUrl}/api/products/${id}`);
+        return this.http.delete<void>(`${this.baseUrl}/products/${id}`);
     }
 
     getCategories() {
