@@ -1,0 +1,3 @@
+    .dialog-body { padding: 0 24px 16px; }
+    .full { width: 100%; }
+    .actions { display:flex; justify-content:flex-end; gap:8px; }

@@ -23,8 +23,7 @@ export class ProductDetail {
   baseUrl = 'http://localhost:3000'
   product = signal<Product | null>(null)
   image = signal<string>('assets/placeholder.png')
-  category = signal<{name:string}>({name: 'default'})
-
+ 
   constructor() {
     const id = this.route.snapshot.paramMap.get('id')!;
 

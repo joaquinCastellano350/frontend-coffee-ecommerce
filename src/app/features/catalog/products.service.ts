@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Product } from "../../shared/models/product.model";
+import { CreateProductDTO, Product, UpdateProductDTO } from "../../shared/models/product.model";
 import { BaseHttpService } from "../../core/http/base-http.service";
 import { HttpParams } from "@angular/common/http";
 
@@ -35,13 +35,39 @@ export class ProductsService extends BaseHttpService {
     getProductById(id: string): Observable<Product> {
         return this.http.get<Product>(`${this.baseUrl}/products/${id}`);
     }
-
+    getAllProducts(): Observable<Product[]> {
+        return this.http.get<Product[]>(`${this.baseUrl}/api/products`);
+    }
     getManyByIds(ids: string[]): Observable<Product[]> {
         const params = new HttpParams().set('ids', ids.join(','));
         return this.http.get<Product[]>(`${this.baseUrl}/api/wishlist/local`, { params });
     }
 
+    createProduct(product: CreateProductDTO, file?: File): Observable<Product> {
+        const formData = new FormData();
+        Object.entries(product).forEach(([key, value]) => {
+            formData.append(key, value as string);
+        });
+        if (file) formData.append('image', file);
+
+        return this.http.post<Product>(`${this.baseUrl}/api/products`, formData);
+    }
+
+    updateProduct(id: string, product: UpdateProductDTO, file?: File): Observable<Product> {
+        const formData = new FormData();
+        Object.entries(product).forEach(([key, value]) => {
+            formData.append(key, value as string);
+        });
+        if (file) formData.append('image', file);
+
+        return this.http.put<Product>(`${this.baseUrl}/api/products/${id}`, formData);
+    }
+
+    deleteProduct(id: string): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}/api/products/${id}`);
+    }
+
     getCategories() {
-        return this.http.get<{name:string , slug:string}[]>(`${this.baseUrl}/categories`);
+        return this.http.get<{name:string , slug:string, _id:string}[]>(`${this.baseUrl}/categories`);
     }
 }

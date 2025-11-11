@@ -34,7 +34,7 @@ export class ProductsList {
   page = signal(1);
   limit = signal(10);
   loading = signal(true);
-  categories = signal<{name:string , slug:string}[]>([]);
+  categories = signal<{name:string , slug:string, _id:string}[]>([]);
 
 
   filters = this.fb.group({

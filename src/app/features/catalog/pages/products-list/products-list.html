@@ -12,7 +12,7 @@
         </mat-label>
         <mat-select formControlName="category">
           <mat-option value="">Todas</mat-option>
-          <mat-option *ngFor="let c of categories()" [value]="c.slug">{{c.name}}</mat-option>
+          <mat-option *ngFor="let c of categories()" [value]="c._id">{{c.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </form>
