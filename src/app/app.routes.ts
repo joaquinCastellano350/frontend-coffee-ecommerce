@@ -5,5 +5,8 @@ import { ProductDetail } from './features/catalog/pages/product-detail/product-d
 export const routes: Routes = [
     { path: '', component: ProductsList },
     {path: 'product/:id', component:ProductDetail},
-    {path:'**', redirectTo:''}
+    {path:'**', redirectTo:''},
+    { path: 'auth', loadChildren: () => import('./features/auth/auth.router').then(m => m.AUTH_ROUTES) },
+    { path: '', redirectTo: '/catalog', pathMatch: 'full' }
 ];
+
