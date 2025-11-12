@@ -5,6 +5,8 @@ import { WishlistPage } from './features/wishlist/pages/wishlist-page/wishlist-p
 import { LoginPage } from './features/auth/login/login.page';
 import { AdminProductsList } from './features/admin/pages/admin-products-list/admin-products-list';
 import { AdminProductForm } from './features/admin/pages/admin-product-form/admin-product-form';
+import { authGuard } from './core/auth/auth.guard';
+import { adminGuard } from './core/auth/admin.guard';
 
 export const routes: Routes = [
     { path: '', component: ProductsList },
@@ -12,9 +14,14 @@ export const routes: Routes = [
     {path: 'wishlist', component:WishlistPage},
     {path: 'login', component:LoginPage , data: {mode: 'login'}},
     {path: 'register', component:LoginPage , data: {mode: 'register'}},
-    {path: 'admin/products', component:AdminProductsList},
-    {path: 'admin/products/new', component: AdminProductForm},
-    {path: 'admin/products/edit/:id', component: AdminProductForm},
+    {path: 'admin',
+        canMatch: [authGuard, adminGuard],
+        children: [
+            {path: 'products', component:AdminProductsList},
+            {path: 'products/new', component: AdminProductForm},
+            {path: 'products/edit/:id', component: AdminProductForm},
+        ]
+    },
     {path:'**', redirectTo:''}
 ];
 

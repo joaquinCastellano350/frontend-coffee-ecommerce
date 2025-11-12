@@ -36,6 +36,10 @@ export class AuthService extends BaseHttpService{
   async login(email: string, password: string) {
     return this.http.post(`/auth/login`, {email, password}).toPromise();
   }
+
+  refreshToken() {
+    return this.http.post(`/auth/refresh`, {}, {withCredentials: true});
+  }
   isLoggedIn() {return !!this.user();}
   isAdmin() {return this.user()?.role === 'admin';}
 }

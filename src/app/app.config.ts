@@ -3,12 +3,13 @@ import { provideRouter } from '@angular/router';
 import { credentialsInterceptor } from './core/http/interceptors/credentials.interceptor';
 import { routes } from './app.routes';
 import { provideHttpClient , withInterceptors } from '@angular/common/http';
+import { refreshInterceptor } from './core/http/interceptors/refresh.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([credentialsInterceptor]))
+    provideHttpClient(withInterceptors([credentialsInterceptor, refreshInterceptor]) )
   ]
 };

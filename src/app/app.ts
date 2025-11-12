@@ -10,6 +10,11 @@ import { CommonModule, NgIf } from '@angular/common';
   styleUrl: './app.css'
 })
 export class App {
-  auth = inject(AuthService);
+   auth = inject(AuthService);
+
+  constructor() {
+    this.auth.refreshSession();
+  }
+
   protected readonly title = signal('frontend-coffee-ecommerce');
 }
