@@ -1,0 +1,6 @@
+.title { display:flex; align-items:center; gap:8px }
+.content { width:min(90vw, 560px) }
+.form { display:grid; gap:12px }
+.full { width:100% }
+.actions { display:flex; justify-content:flex-end; gap:8px; margin-top:4px }
+.ref { margin-bottom:8px; font-size:.9rem; opacity:.8 }

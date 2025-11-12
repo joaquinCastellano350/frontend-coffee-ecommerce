@@ -13,7 +13,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { WishlistService } from '../../../wishlist/wishlist.service';
 import { ProductListComponent } from '../../components/product-list-component/product-list-component';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { InterestForm } from '../../components/interest-form/interest-form';
 @Component({
   selector: 'app-products-list',
   imports: [CommonModule, NgFor, MatCardModule, MatButton, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, RouterLink, ProductListComponent],
@@ -42,7 +44,7 @@ export class ProductsList {
     name: [''],
   });
 
-  constructor() {
+  constructor(private dialog: MatDialog, private snack: MatSnackBar) {
     this.service.getCategories().subscribe((cats) => {
       this.categories.set(cats);
     });
@@ -87,6 +89,14 @@ export class ProductsList {
       this.loading.set(false);
     })
   }
+
+    openForm(){
+    const ref = this.dialog.open(InterestForm);
+    ref.afterClosed().subscribe(ok => {
+      if (ok) this.snack.open('Gracias! Te contactaremos pronto.', 'Cerrar', {duration: 3000})
+    })
+  }
+
 
   goPage(n: number) {
     if (n < 1) return;

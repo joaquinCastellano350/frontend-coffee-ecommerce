@@ -36,9 +36,9 @@
               <mat-icon>{{ wishlist.has(product()?._id ?? '') ? 'favorite' : 'favorite_border' }}</mat-icon>
               {{ wishlist.has(product()?._id ?? '') ? 'En lista de deseos' : 'Añadir a lista de deseos' }}
             </button>
-            <button matFab extended class="contact-button">
+            <button matFab extended class="contact-button" (click)="openForm(product()!._id)">
               <mat-icon>call</mat-icon>
-              Contactar vendedor
+              Me interesa este producto.
             </button>
           </div>
 

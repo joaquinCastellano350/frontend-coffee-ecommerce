@@ -8,6 +8,9 @@ import { MatCardModule } from "@angular/material/card";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFabButton, MatAnchor } from '@angular/material/button';
 import { WishlistService } from '../../../wishlist/wishlist.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { InterestForm } from '../../components/interest-form/interest-form';
 
 @Component({
   selector: 'app-product-detail',
@@ -23,13 +26,20 @@ export class ProductDetail {
   product = signal<Product | null>(null)
   image = signal<string>('assets/placeholder.png')
  
-  constructor() {
+  constructor(private dialog: MatDialog , private snack: MatSnackBar) {
     const id = this.route.snapshot.paramMap.get('id')!;
 
     this.service.getProductById(id).subscribe(p => {
       this.product.set(p);
       if (p.imageURL) this.image.set(p.imageURL)
       
+    })
+  }
+
+  openForm(productId : string){
+    const ref = this.dialog.open(InterestForm, {data: {productId}});
+    ref.afterClosed().subscribe(ok => {
+      if (ok) this.snack.open('Gracias! Te contactaremos pronto.', 'Cerrar', {duration: 3000})
     })
   }
 
