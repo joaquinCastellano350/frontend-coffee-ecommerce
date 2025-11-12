@@ -1,20 +1,47 @@
-<header class="topbar">
-    <a routerLink="/">Home</a>
-    <span class="spacer"></span>
+    <header class="topbar">
+      <a routerLink="/" class="logo"><mat-icon>home</mat-icon> E-Commerce</a>
 
-    <ng-container *ngIf="!auth.loading(); else cargando">
-    <ng-container *ngIf="auth.user(); else anon">
-        Hola, {{ auth.user()!.email }}
-        <a routerLink="/admin/products" *ngIf="auth.isAdmin()">Admin</a>
-        <button (click)="onLogout()">Salir</button>
-    </ng-container>
-    <ng-template #anon>
-        <a routerLink="/login">Ingresar</a>
-        <a routerLink="/register">Registrarse</a>
-    </ng-template>
-    </ng-container>
+      <span class="spacer"></span>
 
-    <ng-template #cargando>cargando…</ng-template>
-</header>
+      <ng-container *ngIf="!auth.loading(); else loading">
+        <ng-container *ngIf="auth.user(); else guest">
+          
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+          </button>
 
-<router-outlet />
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item disabled> {{ auth.user()!.email }} </button>
+            <mat-divider></mat-divider>
+
+            <ng-container *ngIf="auth.isAdmin(); else normalUser">
+              <button mat-menu-item routerLink="/admin/products">
+                <mat-icon>dashboard</mat-icon>
+                <span>Panel Admin</span>
+              </button>
+            </ng-container>
+
+            <ng-template #normalUser>
+              <button mat-menu-item routerLink="/wishlist">
+                <mat-icon>favorite</mat-icon>
+                <span>Lista de deseos</span>
+              </button>
+            </ng-template>
+
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              <span>Cerrar sesión</span>
+            </button>
+          </mat-menu>
+        </ng-container>
+
+        <ng-template #guest>
+          <a mat-button routerLink="/login">Iniciar sesión</a>
+          <a mat-button routerLink="/register">Registrarse</a>
+        </ng-template>
+      </ng-container>
+
+      <ng-template #loading> Cargando… </ng-template>
+    </header>
+
+    <router-outlet />
