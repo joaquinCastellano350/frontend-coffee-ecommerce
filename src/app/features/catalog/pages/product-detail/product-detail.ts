@@ -36,8 +36,8 @@ export class ProductDetail {
     })
   }
 
-  openForm(productId : string){
-    const ref = this.dialog.open(InterestForm, {data: {productId}});
+  openForm(productId : string, productName: string){
+    const ref = this.dialog.open(InterestForm, {data: {productId, productName}});
     ref.afterClosed().subscribe(ok => {
       if (ok) this.snack.open('Gracias! Te contactaremos pronto.', 'Cerrar', {duration: 3000})
     })

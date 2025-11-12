@@ -3,7 +3,7 @@ export interface InterestForm {
     name: string;
     email: string;
     phone?: string;
-    interestedProduct?: string;
+    interestedProduct?: {_id: string, name: string};
     message?: string;
     createdAt: string;
     updatedAt: string;

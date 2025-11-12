@@ -54,7 +54,6 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <!-- Estado vacío -->
     <div class="empty" *ngIf="!loading() && !products().length">
       <p>No hay productos registrados.</p>
     </div>

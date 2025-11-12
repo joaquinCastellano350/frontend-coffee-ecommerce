@@ -8,4 +8,8 @@ export class InterestFormService extends BaseHttpService {
     createInterestForm(data: CreateInterestFormDTO) {
         return this.http.post<InterestForm>(`/api/forms`, data);
     }
+
+    getAllForms() {
+        return this.http.get<InterestForm[]>('/api/forms', {withCredentials: true})
+    }
 }
