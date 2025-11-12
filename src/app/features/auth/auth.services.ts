@@ -1,6 +1,7 @@
 import {Injectable, signal, inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { BaseHttpService } from '../../core/http/base-http.service';
+import { firstValueFrom } from 'rxjs';
 
 export type Role = 'admin' | 'user';
 export interface SessionUser {id: string; email: string; role: Role;}
@@ -36,7 +37,14 @@ export class AuthService extends BaseHttpService{
   async login(email: string, password: string) {
     return this.http.post(`/auth/login`, {email, password}).toPromise();
   }
-
+  async logout() {
+    try {
+      await firstValueFrom(this.http.post(`/auth/logout`, {}));
+    } finally {
+      this.user.set(null);
+      this.loading.set(false);
+    }
+  }
   refreshToken() {
     return this.http.post(`/auth/refresh`, {}, {withCredentials: true});
   }

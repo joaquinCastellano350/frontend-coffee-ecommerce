@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from './features/auth/auth.services';
 import { CommonModule, NgIf } from '@angular/common';
 
@@ -10,10 +10,15 @@ import { CommonModule, NgIf } from '@angular/common';
   styleUrl: './app.css'
 })
 export class App {
-   auth = inject(AuthService);
-
+  auth = inject(AuthService);
+  router = inject(Router)
   constructor() {
     this.auth.refreshSession();
+  }
+
+  async onLogout() {
+    await this.auth.logout();
+    this.router.navigate(['']);
   }
 
   protected readonly title = signal('frontend-coffee-ecommerce');
