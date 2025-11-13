@@ -1,14 +1,16 @@
 <h2 mat-dialog-title>{{ data.title }}</h2>
-  <form [formGroup]="f" (ngSubmit)="submit()" class="dialog-body">
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>{{ data.placeholder }}</mat-label>
-      <input matInput formControlName="name" autocomplete="off">
-      <mat-error *ngIf="f.controls['name'].hasError('required')">Requerido</mat-error>
-      <mat-error *ngIf="f.controls['name'].hasError('minlength')">Mínimo 2 caracteres</mat-error>
-    </mat-form-field>
+<form [formGroup]="f" (ngSubmit)="submit()" class="dialog-body">
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>{{ data.placeholder }}</mat-label>
+    <input matInput formControlName="name" autocomplete="off" />
+    <mat-error *ngIf="f.controls['name'].hasError('required')">Requerido</mat-error>
+    <mat-error *ngIf="f.controls['name'].hasError('minlength')">Mínimo 2 caracteres</mat-error>
+  </mat-form-field>
 
-    <div class="actions">
-      <button mat-stroked-button type="button" (click)="close()">Cancelar</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="f.invalid">{{ data.confirmButtonText || 'Crear' }}</button>
-    </div>
-  </form>
+  <div class="actions">
+    <button mat-stroked-button type="button" (click)="close()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="f.invalid">
+      {{ data.confirmButtonText || 'Crear' }}
+    </button>
+  </div>
+</form>

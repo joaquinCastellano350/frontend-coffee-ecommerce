@@ -7,11 +7,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from "@angular/router";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-forms-list',
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, MatExpansionModule, MatCardModule, RouterLink],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatCardModule,
+    RouterLink,
+  ],
   templateUrl: './admin-forms-list.html',
   styleUrl: './admin-forms-list.css',
 })
@@ -25,8 +33,8 @@ export class AdminFormsList {
 
   load() {
     this.service.getAllForms().subscribe({
-      next: data => this.items.set(data),
-      error: err => console.error("Error al cargar consultas", err)
-    })
+      next: (data) => this.items.set(data),
+      error: (err) => console.error('Error al cargar consultas', err),
+    });
   }
 }

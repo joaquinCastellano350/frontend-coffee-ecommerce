@@ -9,17 +9,24 @@ import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule , NgIf, RouterOutlet, RouterLink, MatDivider, MatMenuModule, MatIconModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    NgIf,
+    RouterOutlet,
+    RouterLink,
+    MatDivider,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   auth = inject(AuthService);
-  router = inject(Router)
+  router = inject(Router);
   constructor() {
-    
     this.auth.refreshSession();
-    
   }
 
   async logout() {

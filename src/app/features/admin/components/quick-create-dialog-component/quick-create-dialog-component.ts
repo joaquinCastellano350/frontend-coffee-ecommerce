@@ -18,7 +18,6 @@ export interface QuickCreateDialogData {
   styleUrl: './quick-create-dialog-component.css',
 })
 export class QuickCreateDialogComponent {
-
   data = inject<QuickCreateDialogData>(MAT_DIALOG_DATA);
   ref = inject(MatDialogRef<QuickCreateDialogComponent>);
   fb = inject(FormBuilder);

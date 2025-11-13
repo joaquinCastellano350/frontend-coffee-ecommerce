@@ -2,7 +2,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { WishlistService } from '../../wishlist.service';
 import { ProductsService } from '../../../catalog/products.service';
 import { Product } from '../../../../shared/models/product.model';
-import { ProductListComponent } from "../../../catalog/components/product-list-component/product-list-component";
+import { ProductListComponent } from '../../../catalog/components/product-list-component/product-list-component';
 
 @Component({
   selector: 'app-wishlist-page',
@@ -11,7 +11,6 @@ import { ProductListComponent } from "../../../catalog/components/product-list-c
   styleUrl: './wishlist-page.css',
 })
 export class WishlistPage {
-
   wishlist = inject(WishlistService);
   private service = inject(ProductsService);
 
@@ -21,19 +20,17 @@ export class WishlistPage {
 
   constructor() {
     effect(() => {
-      const ids = this.wishlist.getItems() || []
+      const ids = this.wishlist.getItems() || [];
       this.loadProducts(ids);
-    })
+    });
   }
 
   private loadProducts(ids: string[]) {
-    this.products.set([])
+    this.products.set([]);
     if (ids.length > 0) {
-    this.service.getManyByIds(ids).subscribe(products => {
-      this.products.set(products);
-    });
-  }
-  
-
+      this.service.getManyByIds(ids).subscribe((products) => {
+        this.products.set(products);
+      });
+    }
   }
 }

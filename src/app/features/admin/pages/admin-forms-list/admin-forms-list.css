@@ -1,7 +1,18 @@
-.page { padding: 24px; max-width: 1000px; margin: auto; }
-.accordion { margin-top: 16px; }
-mat-expansion-panel { margin-bottom: 8px; }
-mat-panel-description {
-    justify-content: space-around;
+.page {
+  padding: 24px;
+  max-width: 1000px;
+  margin: auto;
 }
-.message { padding: 8px 16px; white-space: pre-wrap; }
+.accordion {
+  margin-top: 16px;
+}
+mat-expansion-panel {
+  margin-bottom: 8px;
+}
+mat-panel-description {
+  justify-content: space-around;
+}
+.message {
+  padding: 8px 16px;
+  white-space: pre-wrap;
+}

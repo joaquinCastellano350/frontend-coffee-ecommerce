@@ -1,46 +1,57 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import {  ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth.services';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatCard } from "@angular/material/card";
-import { WishlistService } from '../../wishlist/wishlist.service';
-
+import { MatCard } from '@angular/material/card';
 
 @Component({
   standalone: true,
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCard, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCard,
+    RouterLink,
+  ],
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.css']
+  styleUrls: ['./login.page.css'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
-  private route = inject(ActivatedRoute)
+  private route = inject(ActivatedRoute);
   private snack = inject(MatSnackBar);
   private authService = inject(AuthService);
-  
+
   mode = signal<'login' | 'register'>('login');
   isRegister = computed(() => this.mode() === 'register');
   loading = false;
-  
-  form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
-    confirm: ['']
-  },
-  {validators: (): ReturnType<typeof Validators.required> | null => this.isRegister() && this.form
-    ? (this.form.controls['password'].value === this.form.controls['confirm'].value ? null : {mismatch: true})
-    : null
-  }
-);
 
-private registerModeEffect = effect(() => {
+  form = this.fb.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirm: [''],
+    },
+    {
+      validators: (): ReturnType<typeof Validators.required> | null =>
+        this.isRegister() && this.form
+          ? this.form.controls['password'].value === this.form.controls['confirm'].value
+            ? null
+            : { mismatch: true }
+          : null,
+    },
+  );
+
+  private registerModeEffect = effect(() => {
     const register = this.isRegister();
     const confirmControl = this.form.controls['confirm'];
     if (register) {
@@ -49,8 +60,8 @@ private registerModeEffect = effect(() => {
       confirmControl.clearValidators();
       confirmControl.setValue('');
     }
-    confirmControl.updateValueAndValidity({emitEvent: false});
-    this.form.updateValueAndValidity({emitEvent: false});
+    confirmControl.updateValueAndValidity({ emitEvent: false });
+    this.form.updateValueAndValidity({ emitEvent: false });
   });
   ngOnInit() {
     const routeMode = this.route.snapshot.data['mode'] as 'login' | 'register' | undefined;
@@ -69,10 +80,12 @@ private registerModeEffect = effect(() => {
     }
     if (this.isRegister()) {
       this.loading = true;
-      const { email, password } = this.form.value as { email: string; password: string; };
+      const { email, password } = this.form.value as { email: string; password: string };
       try {
         await this.authService.register(email, password);
-        this.snack.open('Registro exitoso! Ahora podés iniciar sesión', 'Cerrar', { duration: 3000 });
+        this.snack.open('Registro exitoso! Ahora podés iniciar sesión', 'Cerrar', {
+          duration: 3000,
+        });
         this.mode.set('login');
       } catch (error) {
         this.snack.open('Error en el registro. Probá nuevamente.', 'Cerrar', { duration: 3000 });
@@ -82,7 +95,7 @@ private registerModeEffect = effect(() => {
       return;
     }
     this.loading = true;
-    const { email, password } = this.form.value as { email: string; password: string; };
+    const { email, password } = this.form.value as { email: string; password: string };
     try {
       await this.authService.login(email, password);
       this.authService.refreshSession();

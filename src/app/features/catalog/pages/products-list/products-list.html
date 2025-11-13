@@ -4,15 +4,13 @@
     <form [formGroup]="filters" class="filters" (submit)="$event.preventDefault()">
       <mat-form-field appearance="outline">
         <mat-label>Buscar</mat-label>
-        <input matInput formControlName="name" placeholder="Nombre">
+        <input matInput formControlName="name" placeholder="Nombre" />
       </mat-form-field>
       <mat-form-field>
-        <mat-label>
-          Categoria
-        </mat-label>
+        <mat-label> Categoria </mat-label>
         <mat-select formControlName="category">
           <mat-option value="">Todas</mat-option>
-          <mat-option *ngFor="let c of categories()" [value]="c._id">{{c.name}}</mat-option>
+          <mat-option *ngFor="let c of categories()" [value]="c._id">{{ c.name }}</mat-option>
         </mat-select>
       </mat-form-field>
     </form>
@@ -20,11 +18,15 @@
   <app-product-list-component [products]="products()"></app-product-list-component>
   <div class="actions">
     <button matFab (click)="openForm()" aria-label="Contactar"><mat-icon>call</mat-icon></button>
-    <button matFab [routerLink]="['/wishlist']"  aria-label="Lista de deseos"><mat-icon>favorite</mat-icon></button>
+    <button matFab [routerLink]="['/wishlist']" aria-label="Lista de deseos">
+      <mat-icon>favorite</mat-icon>
+    </button>
   </div>
-  <nav class="pager" *ngIf="total()>limit()">
-    <button mat-button (click)="goPage(page()-1)" [disabled]="page()<=1">Anterior</button>
-    <span>Pagina {{page()}}</span>
-    <button mat-button (click)="goPage(page()+1)" [disabled]="page()*limit()>=total()">Siguiente</button>
+  <nav class="pager" *ngIf="total() > limit()">
+    <button mat-button (click)="goPage(page() - 1)" [disabled]="page() <= 1">Anterior</button>
+    <span>Pagina {{ page() }}</span>
+    <button mat-button (click)="goPage(page() + 1)" [disabled]="page() * limit() >= total()">
+      Siguiente
+    </button>
   </nav>
 </div>

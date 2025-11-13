@@ -8,9 +8,8 @@ describe('QuickCreateDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QuickCreateDialogComponent]
-    })
-    .compileComponents();
+      imports: [QuickCreateDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QuickCreateDialogComponent);
     component = fixture.componentInstance;

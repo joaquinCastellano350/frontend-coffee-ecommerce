@@ -1,8 +1,10 @@
-    <h2 mat-dialog-title>{{ data.title || 'Confirmar' }}</h2>
-    <div class="body" mat-dialog-content>
-      <p>{{ data.message }}</p>
-    </div>
-    <div mat-dialog-actions align="end">
-      <button mat-stroked-button (click)="ref.close(false)">{{ data.cancelText || 'Cancelar' }}</button>
-      <button mat-raised-button color="primary" (click)="ref.close(true)">{{ data.confirmText || 'Aceptar' }}</button>
-    </div>
+<h2 mat-dialog-title>{{ data.title || 'Confirmar' }}</h2>
+<div class="body" mat-dialog-content>
+  <p>{{ data.message }}</p>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="ref.close(false)">{{ data.cancelText || 'Cancelar' }}</button>
+  <button mat-raised-button color="primary" (click)="ref.close(true)">
+    {{ data.confirmText || 'Aceptar' }}
+  </button>
+</div>

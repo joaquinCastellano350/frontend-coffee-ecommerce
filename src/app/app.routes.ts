@@ -10,20 +10,20 @@ import { adminGuard } from './core/auth/admin.guard';
 import { AdminFormsList } from './features/admin/pages/admin-forms-list/admin-forms-list';
 
 export const routes: Routes = [
-    { path: '', component: ProductsList },
-    {path: 'product/:id', component:ProductDetail},
-    {path: 'wishlist', component:WishlistPage},
-    {path: 'login', component:LoginPage , data: {mode: 'login'}},
-    {path: 'register', component:LoginPage , data: {mode: 'register'}},
-    {path: 'admin',
-        canMatch: [authGuard, adminGuard],
-        children: [
-            {path: 'forms', component:AdminFormsList},
-            {path: 'products', component:AdminProductsList},
-            {path: 'products/new', component: AdminProductForm},
-            {path: 'products/edit/:id', component: AdminProductForm},
-        ]
-    },
-    {path:'**', redirectTo:''}
+  { path: '', component: ProductsList },
+  { path: 'product/:id', component: ProductDetail },
+  { path: 'wishlist', component: WishlistPage },
+  { path: 'login', component: LoginPage, data: { mode: 'login' } },
+  { path: 'register', component: LoginPage, data: { mode: 'register' } },
+  {
+    path: 'admin',
+    canMatch: [authGuard, adminGuard],
+    children: [
+      { path: 'forms', component: AdminFormsList },
+      { path: 'products', component: AdminProductsList },
+      { path: 'products/new', component: AdminProductForm },
+      { path: 'products/edit/:id', component: AdminProductForm },
+    ],
+  },
+  { path: '**', redirectTo: '' },
 ];
-

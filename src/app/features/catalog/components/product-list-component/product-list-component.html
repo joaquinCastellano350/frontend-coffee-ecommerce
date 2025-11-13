@@ -1,27 +1,30 @@
+<section class="grid" *ngIf="products?.length; else loadingTpl">
+  <mat-card *ngFor="let product of products" class="product-card" appearance="outlined">
+    <mat-card-header class="product-card-header">
+      <mat-card-title>{{ product.name }}</mat-card-title>
+      <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
+    </mat-card-header>
+    <a href="/product/{{ product._id }}">
+      <img mat-card-lg-image [src]="'uploads' + product.imageURL" [alt]="product.name" />
+    </a>
+    <mat-card-content class="product-card-content">
+      <p>{{ product.description }}</p>
+    </mat-card-content>
 
-  <section class="grid" *ngIf="products?.length; else loadingTpl">
-    <mat-card *ngFor="let product of products" class="product-card" appearance="outlined">
-      <mat-card-header class="product-card-header">
-        <mat-card-title>{{ product.name }}</mat-card-title>
-        <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
-      </mat-card-header>
-      <a href="http://localhost:4200/product/{{product._id}}">
-        <img mat-card-lg-image [src]="'uploads' + product.imageURL" [alt]="product.name" />
-      </a>
-      <mat-card-content class="product-card-content">
-        <p>{{ product.description }}</p>
-      </mat-card-content>
+    <mat-card-actions>
+      <button matButton (click)="wishlist.toggle(product._id)" color="primary">
+        {{
+          wishlist.has(product._id)
+            ? 'Eliminar de la lista de deseos'
+            : 'Añadir a la lista de deseos'
+        }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>
 
-      <mat-card-actions>
-        <button matButton (click)="wishlist.toggle(product._id)" color="primary">{{wishlist.has(product._id) ? 'Eliminar de la lista de deseos' : 'Añadir a la lista de deseos'}}</button>
-      </mat-card-actions>
-    </mat-card>
-  </section>
-  
-  <ng-template #loadingTpl>
-    <div class="grid">
-    <div class="skeleton" *ngFor="let i of [1,2,3,4,5,6,7,8]"></div>
+<ng-template #loadingTpl>
+  <div class="grid">
+    <div class="skeleton" *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"></div>
   </div>
-  </ng-template>
-
-
+</ng-template>

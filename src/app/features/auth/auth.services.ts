@@ -1,15 +1,16 @@
-import {Injectable, signal, inject} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
 import { BaseHttpService } from '../../core/http/base-http.service';
 import { firstValueFrom } from 'rxjs';
-import { WishlistService } from '../wishlist/wishlist.service';
 
 export type Role = 'admin' | 'user';
-export interface SessionUser {id: string; email: string; role: Role;}
+export interface SessionUser {
+  id: string;
+  email: string;
+  role: Role;
+}
 
-@Injectable({providedIn: 'root'})
-export class AuthService extends BaseHttpService{
-  
+@Injectable({ providedIn: 'root' })
+export class AuthService extends BaseHttpService {
   user = signal<SessionUser | null>(null);
   loading = signal<boolean>(true);
   constructor() {
@@ -18,7 +19,7 @@ export class AuthService extends BaseHttpService{
   }
 
   refreshSession() {
-    console.log('holaa')
+    console.log('holaa');
     this.loading.set(true);
     this.http.get<SessionUser>(`/auth/me`).subscribe({
       next: (user) => {
@@ -28,19 +29,19 @@ export class AuthService extends BaseHttpService{
       error: () => {
         this.user.set(null);
         this.loading.set(false);
-      }
-    })
+      },
+    });
   }
   async register(email: string, password: string) {
-    return this.http.post(`/auth/register`, {email, password}).toPromise();
+    return this.http.post(`/auth/register`, { email, password }).toPromise();
   }
 
   async login(email: string, password: string) {
-    try {
-    await this.http.post(`/auth/login`, {email, password}).toPromise();
-    } finally {
-      return;
-    }
+    //try {
+    await this.http.post(`/auth/login`, { email, password }).toPromise();
+    //} finally {
+    //  return;
+    //}
   }
   async logout() {
     try {
@@ -51,8 +52,12 @@ export class AuthService extends BaseHttpService{
     }
   }
   refreshToken() {
-    return this.http.post(`/auth/refresh`, {}, {withCredentials: true});
+    return this.http.post(`/auth/refresh`, {}, { withCredentials: true });
   }
-  isLoggedIn() {return !!this.user();}
-  isAdmin() {return this.user()?.role === 'admin';}
+  isLoggedIn() {
+    return !!this.user();
+  }
+  isAdmin() {
+    return this.user()?.role === 'admin';
+  }
 }

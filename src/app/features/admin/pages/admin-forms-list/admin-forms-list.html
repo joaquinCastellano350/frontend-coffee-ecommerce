@@ -1,22 +1,30 @@
 <div class="page">
-    <h1>Consultas de usuarios</h1>
+  <h1>Consultas de usuarios</h1>
 
-    <mat-accordion class="accordion" multi>
-      <mat-expansion-panel *ngFor="let i of items()">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>person</mat-icon>
-            {{ i.name }}
-          </mat-panel-title>
-          <mat-panel-description>
-            <mat-icon>email</mat-icon> {{ i.email }} —
-            <mat-icon>shopping_bag</mat-icon> {{ i.interestedProduct?.name || 'Consulta general' }} —
-            {{ i.createdAt | date:'mediumDate' }}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
+  <mat-accordion class="accordion" multi>
+    <mat-expansion-panel *ngFor="let i of items()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>person</mat-icon>
+          {{ i.name }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon>email</mat-icon> {{ i.email }} — <mat-icon>shopping_bag</mat-icon>
+          {{ i.interestedProduct?.name || 'Consulta general' }} —
+          {{ i.createdAt | date: 'mediumDate' }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
-        <p class="message"><strong>Mensaje:</strong> {{ i.message }}</p>
-        <button *ngIf="i?.interestedProduct" mat-button color="warn" type="button" [routerLink]="['/product/',i.interestedProduct!._id]">Ir al producto</button>
-      </mat-expansion-panel>
-    </mat-accordion>
+      <p class="message"><strong>Mensaje:</strong> {{ i.message }}</p>
+      <button
+        *ngIf="i?.interestedProduct"
+        mat-button
+        color="warn"
+        type="button"
+        [routerLink]="['/product/', i.interestedProduct!._id]"
+      >
+        Ir al producto
+      </button>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

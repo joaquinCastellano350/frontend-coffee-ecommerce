@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
-
 export interface ConfirmDialogData {
   title?: string;
   message: string;
@@ -17,7 +16,6 @@ export interface ConfirmDialogData {
   styleUrl: './confirm-dialog-component.css',
 })
 export class ConfirmDialogComponent {
-
   ref = inject(MatDialogRef<ConfirmDialogComponent, boolean>);
-  data = inject<ConfirmDialogData>(MAT_DIALOG_DATA)
+  data = inject<ConfirmDialogData>(MAT_DIALOG_DATA);
 }
