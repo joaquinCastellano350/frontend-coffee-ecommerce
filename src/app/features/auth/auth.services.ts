@@ -2,6 +2,7 @@ import {Injectable, signal, inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { BaseHttpService } from '../../core/http/base-http.service';
 import { firstValueFrom } from 'rxjs';
+import { WishlistService } from '../wishlist/wishlist.service';
 
 export type Role = 'admin' | 'user';
 export interface SessionUser {id: string; email: string; role: Role;}
@@ -9,7 +10,6 @@ export interface SessionUser {id: string; email: string; role: Role;}
 @Injectable({providedIn: 'root'})
 export class AuthService extends BaseHttpService{
   
-
   user = signal<SessionUser | null>(null);
   loading = signal<boolean>(true);
   constructor() {
@@ -18,6 +18,7 @@ export class AuthService extends BaseHttpService{
   }
 
   refreshSession() {
+    console.log('holaa')
     this.loading.set(true);
     this.http.get<SessionUser>(`/auth/me`).subscribe({
       next: (user) => {
@@ -35,7 +36,11 @@ export class AuthService extends BaseHttpService{
   }
 
   async login(email: string, password: string) {
-    return this.http.post(`/auth/login`, {email, password}).toPromise();
+    try {
+    await this.http.post(`/auth/login`, {email, password}).toPromise();
+    } finally {
+      return;
+    }
   }
   async logout() {
     try {

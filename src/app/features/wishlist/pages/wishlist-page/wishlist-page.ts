@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { WishlistService } from '../../wishlist.service';
 import { ProductsService } from '../../../catalog/products.service';
 import { Product } from '../../../../shared/models/product.model';
@@ -20,13 +20,20 @@ export class WishlistPage {
   ids = this.wishlist.getItems();
 
   constructor() {
-    this.loadProducts();
+    effect(() => {
+      const ids = this.wishlist.getItems() || []
+      this.loadProducts(ids);
+    })
   }
 
-  private loadProducts() {
-    const ids = this.wishlist.getItems();
+  private loadProducts(ids: string[]) {
+    this.products.set([])
+    if (ids.length > 0) {
     this.service.getManyByIds(ids).subscribe(products => {
       this.products.set(products);
     });
+  }
+  
+
   }
 }

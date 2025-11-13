@@ -17,7 +17,9 @@ export class App {
   auth = inject(AuthService);
   router = inject(Router)
   constructor() {
+    
     this.auth.refreshSession();
+    
   }
 
   async logout() {

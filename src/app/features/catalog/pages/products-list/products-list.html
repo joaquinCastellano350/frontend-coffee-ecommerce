@@ -18,7 +18,10 @@
     </form>
   </header>
   <app-product-list-component [products]="products()"></app-product-list-component>
-  <button matFab (click)="openForm()" aria-label="Contactar" class="contact"><mat-icon>call</mat-icon></button>
+  <div class="actions">
+    <button matFab (click)="openForm()" aria-label="Contactar"><mat-icon>call</mat-icon></button>
+    <button matFab [routerLink]="['/wishlist']"  aria-label="Lista de deseos"><mat-icon>favorite</mat-icon></button>
+  </div>
   <nav class="pager" *ngIf="total()>limit()">
     <button mat-button (click)="goPage(page()-1)" [disabled]="page()<=1">Anterior</button>
     <span>Pagina {{page()}}</span>

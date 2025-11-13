@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatCard } from "@angular/material/card";
+import { WishlistService } from '../../wishlist/wishlist.service';
 
 
 @Component({
@@ -23,7 +24,6 @@ export class LoginPage {
   private route = inject(ActivatedRoute)
   private snack = inject(MatSnackBar);
   private authService = inject(AuthService);
-
   
   mode = signal<'login' | 'register'>('login');
   isRegister = computed(() => this.mode() === 'register');

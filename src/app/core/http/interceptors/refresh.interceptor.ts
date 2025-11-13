@@ -18,6 +18,7 @@ export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
                 return auth.refreshToken().pipe(
                     switchMap(() => {
                         auth.refreshSession();
+                        
                         return next(reqAuth);
                     }),
                     catchError((err: HttpErrorResponse) => {
