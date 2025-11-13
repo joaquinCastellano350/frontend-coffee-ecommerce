@@ -5,7 +5,13 @@
       <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
     </mat-card-header>
     <a href="/product/{{ product._id }}">
-      <img mat-card-lg-image [src]="'uploads' + product.imageURL" [alt]="product.name" />
+      <img
+        mat-card-lg-image
+        [src]="
+          product.imageURL ? 'uploads' + product.imageURL : 'uploads/uploads/assets/placeholder.png'
+        "
+        [alt]="product.name"
+      />
     </a>
     <mat-card-content class="product-card-content">
       <p>{{ product.description }}</p>

@@ -24,7 +24,7 @@ export class ProductDetail {
 
   wishlist = inject(WishlistService);
   product = signal<Product | null>(null);
-  image = signal<string>('assets/placeholder.png');
+  image = signal<string>('/uploads/assets/placeholder.png');
   dialog = inject(MatDialog);
   snack = inject(MatSnackBar);
   constructor() {
