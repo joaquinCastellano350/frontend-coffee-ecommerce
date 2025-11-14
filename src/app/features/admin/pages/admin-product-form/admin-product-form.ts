@@ -94,7 +94,6 @@ export class AdminProductForm implements OnInit {
           category_id: product.category_id?._id,
           catalog_id: product.catalog_id?._id,
         });
-        console.log(product);
       },
       (error) => {
         this.snack.open('Error al cargar el producto', 'Cerrar', { duration: 3000 });
@@ -161,7 +160,6 @@ export class AdminProductForm implements OnInit {
   }
 
   async ensureCatalogEnabled(): Promise<boolean> {
-    console.log(this.form.value.catalog_id);
     const catalogId = this.form.value.catalog_id as string;
 
     const catalog = this.catalogs().find((c) => c._id === catalogId);

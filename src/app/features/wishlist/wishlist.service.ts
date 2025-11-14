@@ -31,7 +31,6 @@ export class WishlistService extends BaseHttpService {
   }
 
   toggle(productId: string) {
-    console.log(productId);
     const set = new Set(this._wishlist());
     if (set.has(productId)) {
       set.delete(productId);

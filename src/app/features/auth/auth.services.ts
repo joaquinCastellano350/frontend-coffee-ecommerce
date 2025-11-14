@@ -19,7 +19,6 @@ export class AuthService extends BaseHttpService {
   }
 
   refreshSession() {
-    console.log('holaa');
     this.loading.set(true);
     this.http.get<SessionUser>(`/auth/me`).subscribe({
       next: (user) => {
@@ -37,11 +36,7 @@ export class AuthService extends BaseHttpService {
   }
 
   async login(email: string, password: string) {
-    //try {
     await this.http.post(`/auth/login`, { email, password }).toPromise();
-    //} finally {
-    //  return;
-    //}
   }
   async logout() {
     try {
