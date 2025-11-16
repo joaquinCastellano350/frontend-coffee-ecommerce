@@ -88,6 +88,7 @@ export class LoginPage implements OnInit {
         });
         this.mode.set('login');
       } catch (error) {
+        console.error(error);
         this.snack.open('Error en el registro. Probá nuevamente.', 'Cerrar', { duration: 3000 });
       } finally {
         this.loading = false;
@@ -98,10 +99,16 @@ export class LoginPage implements OnInit {
     const { email, password } = this.form.value as { email: string; password: string };
     try {
       await this.authService.login(email, password);
-      this.authService.refreshSession();
+      const u = await this.authService.refreshSession();
+      console.log(u);
       this.snack.open('Inicio de sesión exitoso', 'Cerrar', { duration: 3000 });
-      this.router.navigate(['/']);
+      if (u && u.role === 'admin') {
+        this.router.navigateByUrl('/admin');
+      } else {
+        this.router.navigate(['/']);
+      }
     } catch (error) {
+      console.error(error);
       this.snack.open('Credenciales Invalidas', 'Cerrar', { duration: 3000 });
     } finally {
       this.loading = false;

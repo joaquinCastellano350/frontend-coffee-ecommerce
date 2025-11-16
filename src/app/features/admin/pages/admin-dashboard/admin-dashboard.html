@@ -1,0 +1,73 @@
+<div class="page">
+  <header class="header">
+    <div>
+      <h1>Panel de administración</h1>
+      <p class="subtitle">Resumen general del negocio</p>
+    </div>
+    <div class="user" *ngIf="auth.user()">
+      <mat-icon>admin_panel_settings</mat-icon>
+      <span>{{ auth.user()!.email }}</span>
+    </div>
+  </header>
+
+  <section class="grid">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Productos</mat-card-title>
+        <mat-card-subtitle>Catálogo y carga de productos</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gestioná el catálogo de productos: creá, editá y revisá los productos publicados.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/admin/products">
+          <mat-icon>inventory_2</mat-icon>
+          &nbsp; Ver productos
+        </button>
+        <button mat-button routerLink="/admin/products/new">
+          <mat-icon>add</mat-icon>
+          &nbsp; Nuevo producto
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Consultas de usuarios</mat-card-title>
+        <mat-card-subtitle>Formularios de interés</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Revisá los formularios de interés que enviaron los clientes para hacer seguimiento
+          comercial.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="accent" routerLink="/admin/forms">
+          <mat-icon>mail</mat-icon>
+          &nbsp; Ver consultas
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Resumen</mat-card-title>
+        <mat-card-subtitle>Estado general</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="summary">
+          <li>Productos gestionados desde el panel de admin.</li>
+          <li>Wishlist sincronizada entre usuarios autenticados y anónimos.</li>
+          <li>Consultas de clientes visibles en tiempo real.</li>
+        </ul>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="goToCatalog()">
+          <mat-icon>shopping_bag</mat-icon>
+          &nbsp; Ir al catálogo público
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+</div>
