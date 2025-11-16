@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatCard } from '@angular/material/card';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -88,7 +89,16 @@ export class LoginPage implements OnInit {
         });
         this.mode.set('login');
       } catch (error) {
-        this.snack.open('Error en el registro. Probá nuevamente.', 'Cerrar', { duration: 3000 });
+        if ((error as HttpErrorResponse).status == 409) {
+          this.snack.open('Ya existe un usuario con ese correo.', 'Iniciar Sesión', {
+            duration: 5000,
+          });
+          this.snack._openedSnackBarRef?.onAction().subscribe(() => {
+            this.mode.set('login');
+          });
+        } else {
+          this.snack.open('Error en el registro. Probá nuevamente.', 'Cerrar', { duration: 3000 });
+        }
       } finally {
         this.loading = false;
       }
