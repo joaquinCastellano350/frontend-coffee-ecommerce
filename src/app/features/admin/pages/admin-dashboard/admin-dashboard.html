@@ -1,73 +1,77 @@
-<div class="page">
-  <header class="header">
+<div class="dashboard-container">
+  <div class="dashboard-header">
     <div>
-      <h1>Panel de administración</h1>
-      <p class="subtitle">Resumen general del negocio</p>
+      <h1>Admin Dashboard</h1>
+      <p class="subtitle">Panel de gestión del negocio</p>
     </div>
-    <div class="user" *ngIf="auth.user()">
-      <mat-icon>admin_panel_settings</mat-icon>
-      <span>{{ auth.user()!.email }}</span>
+
+    <div class="user-chip" *ngIf="auth.user()">
+      <mat-icon class="user-icon">account_circle</mat-icon>
+      <div>
+        <span class="user-name">{{ auth.user()!.email }}</span>
+        <span class="user-role">Administrador</span>
+      </div>
     </div>
-  </header>
+  </div>
 
-  <section class="grid">
-    <mat-card class="card">
-      <mat-card-header>
-        <mat-card-title>Productos</mat-card-title>
-        <mat-card-subtitle>Catálogo y carga de productos</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Gestioná el catálogo de productos: creá, editá y revisá los productos publicados.</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/admin/products">
-          <mat-icon>inventory_2</mat-icon>
-          &nbsp; Ver productos
-        </button>
-        <button mat-button routerLink="/admin/products/new">
-          <mat-icon>add</mat-icon>
-          &nbsp; Nuevo producto
-        </button>
-      </mat-card-actions>
-    </mat-card>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="icon-wrapper blue-bg">
+        <mat-icon class="icon">local_mall</mat-icon>
+      </div>
+      <h3>Productos</h3>
+      <p class="description">Gestioná todos los productos del catálogo.</p>
 
-    <mat-card class="card">
-      <mat-card-header>
-        <mat-card-title>Consultas de usuarios</mat-card-title>
-        <mat-card-subtitle>Formularios de interés</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p>
-          Revisá los formularios de interés que enviaron los clientes para hacer seguimiento
-          comercial.
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="accent" routerLink="/admin/forms">
-          <mat-icon>mail</mat-icon>
-          &nbsp; Ver consultas
-        </button>
-      </mat-card-actions>
-    </mat-card>
+      <button
+        mat-raised-button
+        color="primary"
+        class="action-btn"
+        [routerLink]="['/admin/products']"
+      >
+        Administrar productos
+      </button>
+    </div>
 
-    <mat-card class="card">
-      <mat-card-header>
-        <mat-card-title>Resumen</mat-card-title>
-        <mat-card-subtitle>Estado general</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <ul class="summary">
-          <li>Productos gestionados desde el panel de admin.</li>
-          <li>Wishlist sincronizada entre usuarios autenticados y anónimos.</li>
-          <li>Consultas de clientes visibles en tiempo real.</li>
-        </ul>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button (click)="goToCatalog()">
-          <mat-icon>shopping_bag</mat-icon>
-          &nbsp; Ir al catálogo público
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </section>
+    <div class="card">
+      <div class="icon-wrapper purple-bg">
+        <mat-icon class="icon">mail</mat-icon>
+      </div>
+      <h3>Consultas de usuarios</h3>
+      <p class="description">Revisá los formularios de interés enviados por los clientes.</p>
+
+      <button mat-raised-button color="accent" class="action-btn" [routerLink]="['/admin/forms']">
+        Ver consultas
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="icon-wrapper green-bg">
+        <mat-icon class="icon">inventory_2</mat-icon>
+      </div>
+      <h3>Catálogos</h3>
+      <p class="description">Administrar catálogos: Crear, editar, visibilidad</p>
+
+      <button mat-raised-button color="primary" class="action-btn">Gestionar Catálogos</button>
+    </div>
+
+    <div class="card">
+      <div class="icon-wrapper purple-bg">
+        <mat-icon class="icon">local_offer</mat-icon>
+      </div>
+      <h3>Categorías</h3>
+      <p class="description">Administrar categorías: Crear y editar categorías de los productos</p>
+
+      <button mat-raised-button color="primary" class="action-btn">Gestionar Categorías</button>
+    </div>
+
+    <div class="card">
+      <div class="icon-wrapper green-bg">
+        <mat-icon class="icon">supervisor_account</mat-icon>
+      </div>
+      <h3>Usuarios</h3>
+      <p class="description">Gestionar roles de usuarios: Administrador o Usuario</p>
+
+      <button mat-raised-button color="primary" class="action-btn">Gestionar Usuarios</button>
+    </div>
+  </div>
 </div>
