@@ -41,7 +41,8 @@ export class ProductsList {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-
+  dialog = inject(MatDialog);
+  snack = inject(MatSnackBar);
   wishlist = inject(WishlistService);
 
   products = signal<Product[]>([]);
@@ -57,10 +58,7 @@ export class ProductsList {
     name: [''],
   });
 
-  constructor(
-    private dialog: MatDialog,
-    private snack: MatSnackBar,
-  ) {
+  constructor() {
     this.service.getCategories().subscribe((cats) => {
       this.categories.set(cats);
     });
@@ -111,6 +109,12 @@ export class ProductsList {
       });
   }
 
+  scrollToCatalog() {
+    const el = document.getElementById('catalog-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
   openForm() {
     const ref = this.dialog.open(InterestForm);
     ref.afterClosed().subscribe((ok) => {

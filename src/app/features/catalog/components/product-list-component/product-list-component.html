@@ -1,31 +1,32 @@
 <section class="grid" *ngIf="products?.length; else loadingTpl">
   <mat-card *ngFor="let product of products" class="product-card" appearance="outlined">
-    <mat-card-header class="product-card-header">
-      <mat-card-title>{{ product.name }}</mat-card-title>
-      <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
-    </mat-card-header>
-    <a href="/product/{{ product._id }}">
-      <img
-        mat-card-lg-image
-        [src]="
-          product.imageURL ? 'uploads' + product.imageURL : 'uploads/uploads/assets/placeholder.png'
-        "
-        [alt]="product.name"
-      />
-    </a>
+    <div class="image-container">
+      <a href="/product/{{ product._id }}">
+        <img
+          mat-card-lg-image
+          [src]="
+            product.imageURL
+              ? 'uploads' + product.imageURL
+              : 'uploads/uploads/assets/placeholder.png'
+          "
+          [alt]="product.name"
+        />
+      </a>
+    </div>
     <mat-card-content class="product-card-content">
-      <p>{{ product.description }}</p>
+      <h3 class="title">{{ product.name }}</h3>
+      <p class="description">{{ product.description }}</p>
     </mat-card-content>
-
-    <mat-card-actions>
-      <button matButton (click)="wishlist.toggle(product._id)" color="primary">
-        {{
-          wishlist.has(product._id)
-            ? 'Eliminar de la lista de deseos'
-            : 'Añadir a la lista de deseos'
-        }}
-      </button>
-    </mat-card-actions>
+    <mat-card-footer class="product-card-bottom">
+      <span class="price">${{ product.price }}</span>
+      <mat-card-actions>
+        <button matButton (click)="wishlist.toggle(product._id)" color="primary">
+          <mat-icon>
+            {{ wishlist.has(product._id) ? 'favorite' : 'favorite_border' }}
+          </mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card-footer>
   </mat-card>
 </section>
 

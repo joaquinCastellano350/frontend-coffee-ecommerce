@@ -1,27 +1,60 @@
 <div class="page">
-  <header class="toolbar">
-    <h1 class="toolbar-title">Catálogo de Productos</h1>
-    <form [formGroup]="filters" class="filters" (submit)="$event.preventDefault()">
-      <mat-form-field appearance="outline">
-        <mat-label>Buscar</mat-label>
-        <input matInput formControlName="name" placeholder="Nombre" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label> Categoria </mat-label>
-        <mat-select formControlName="category">
-          <mat-option value="">Todas</mat-option>
-          <mat-option *ngFor="let c of categories()" [value]="c._id">{{ c.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
-  </header>
-  <app-product-list-component [products]="products()"></app-product-list-component>
-  <div class="actions">
-    <button matFab (click)="openForm()" aria-label="Contactar"><mat-icon>call</mat-icon></button>
-    <button matFab [routerLink]="['/wishlist']" aria-label="Lista de deseos">
-      <mat-icon>favorite</mat-icon>
-    </button>
-  </div>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Disfrutá el mejor café desde casa</h1>
+        <p>
+          Equipos de espresso, café en grano y accesorios seleccionados para que armes tu barista
+          station en casa o en tu negocio.
+        </p>
+
+        <div class="hero-actions">
+          <button mat-raised-button color="primary" (click)="scrollToCatalog()">
+            Ver catálogo
+          </button>
+
+          <button mat-stroked-button color="primary" routerLink="/wishlist">
+            Ver mi lista de deseos
+          </button>
+        </div>
+
+        <div class="hero-badges">
+          <span> Productos seleccionados</span>
+          <span> Envíos a todo el país</span>
+          <span> Atención Personalizada</span>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="hero-coffee.jpg" alt="Máquina de café espresso" />
+      </div>
+    </div>
+  </section>
+  <section id="catalog-section" class="catalog-section">
+    <header class="toolbar">
+      <h1 class="toolbar-title">Catálogo de Productos</h1>
+      <form [formGroup]="filters" class="filters" (submit)="$event.preventDefault()">
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar</mat-label>
+          <input matInput formControlName="name" placeholder="Nombre" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label> Categoria </mat-label>
+          <mat-select formControlName="category">
+            <mat-option value="">Todas</mat-option>
+            <mat-option *ngFor="let c of categories()" [value]="c._id">{{ c.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </header>
+    <app-product-list-component [products]="products()"></app-product-list-component>
+    <div class="actions">
+      <button matFab (click)="openForm()" aria-label="Contactar"><mat-icon>call</mat-icon></button>
+      <button matFab [routerLink]="['/wishlist']" aria-label="Lista de deseos">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+  </section>
   <nav class="pager" *ngIf="total() > limit()">
     <button mat-button (click)="goPage(page() - 1)" [disabled]="page() <= 1">Anterior</button>
     <span>Pagina {{ page() }}</span>
