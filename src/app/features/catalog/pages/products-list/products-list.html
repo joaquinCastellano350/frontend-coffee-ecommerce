@@ -2,7 +2,7 @@
   <section class="hero">
     <div class="hero-content">
       <div class="hero-text">
-        <h1>Disfrutá el mejor café desde casa</h1>
+        <h1>Descubrí el mejor café</h1>
         <p>
           Equipos de espresso, café en grano y accesorios seleccionados para que armes tu barista
           station en casa o en tu negocio.
@@ -31,22 +31,20 @@
     </div>
   </section>
   <section id="catalog-section" class="catalog-section">
-    <header class="toolbar">
-      <h1 class="toolbar-title">Catálogo de Productos</h1>
-      <form [formGroup]="filters" class="filters" (submit)="$event.preventDefault()">
-        <mat-form-field appearance="outline">
-          <mat-label>Buscar</mat-label>
-          <input matInput formControlName="name" placeholder="Nombre" />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label> Categoria </mat-label>
-          <mat-select formControlName="category">
-            <mat-option value="">Todas</mat-option>
-            <mat-option *ngFor="let c of categories()" [value]="c._id">{{ c.name }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </header>
+    <h1 class="toolbar-title">Nuestros productos</h1>
+    <form [formGroup]="filters" class="filters" (submit)="$event.preventDefault()">
+      <mat-form-field appearance="outline" class="filter-input">
+        <mat-label>Buscar</mat-label>
+        <input matInput formControlName="name" placeholder="Nombre" />
+      </mat-form-field>
+      <mat-form-field class="filter-select">
+        <mat-label> Categoria </mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="">Todas</mat-option>
+          <mat-option *ngFor="let c of categories()" [value]="c._id">{{ c.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
     <app-product-list-component [products]="products()"></app-product-list-component>
     <div class="actions">
       <button matFab (click)="openForm()" aria-label="Contactar"><mat-icon>call</mat-icon></button>
