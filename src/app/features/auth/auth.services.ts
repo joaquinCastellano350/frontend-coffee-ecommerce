@@ -18,18 +18,26 @@ export class AuthService extends BaseHttpService {
     this.refreshSession();
   }
 
-  refreshSession() {
+  async refreshSession(): Promise<SessionUser | null> {
     this.loading.set(true);
-    this.http.get<SessionUser>(`/auth/me`).subscribe({
-      next: (user) => {
-        this.user.set(user);
-        this.loading.set(false);
-      },
-      error: () => {
+    try {
+      const me = await this.http
+        .get<SessionUser>('/auth/me', { withCredentials: true })
+        .toPromise();
+
+      if (me) {
+        this.user.set(me);
+        return me;
+      } else {
         this.user.set(null);
-        this.loading.set(false);
-      },
-    });
+        return null;
+      }
+    } catch {
+      this.user.set(null);
+      return null;
+    } finally {
+      this.loading.set(false);
+    }
   }
   async register(email: string, password: string) {
     return this.http.post(`/auth/register`, { email, password }).toPromise();

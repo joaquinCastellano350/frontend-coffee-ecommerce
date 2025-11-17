@@ -8,6 +8,7 @@ import { AdminProductForm } from './features/admin/pages/admin-product-form/admi
 import { authGuard } from './core/auth/auth.guard';
 import { adminGuard } from './core/auth/admin.guard';
 import { AdminFormsList } from './features/admin/pages/admin-forms-list/admin-forms-list';
+import { AdminDashboard } from './features/admin/pages/admin-dashboard/admin-dashboard';
 
 export const routes: Routes = [
   { path: '', component: ProductsList },
@@ -19,6 +20,7 @@ export const routes: Routes = [
     path: 'admin',
     canMatch: [authGuard, adminGuard],
     children: [
+      { path: '', pathMatch: 'full', component: AdminDashboard },
       { path: 'forms', component: AdminFormsList },
       { path: 'products', component: AdminProductsList },
       { path: 'products/new', component: AdminProductForm },

@@ -14,8 +14,12 @@
         <mat-divider></mat-divider>
 
         <ng-container *ngIf="auth.isAdmin(); else normalUser">
-          <button mat-menu-item routerLink="/admin/products">
+          <button mat-menu-item routerLink="/admin">
             <mat-icon>dashboard</mat-icon>
+            <span>Panel de Administrador</span>
+          </button>
+          <button mat-menu-item routerLink="/admin/products">
+            <mat-icon>local_mall</mat-icon>
             <span>Gestionar Productos</span>
           </button>
           <button mat-menu-item routerLink="/admin/forms">
