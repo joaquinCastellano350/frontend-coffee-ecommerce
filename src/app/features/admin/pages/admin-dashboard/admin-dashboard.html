@@ -71,7 +71,9 @@
       <h3>Usuarios</h3>
       <p class="description">Gestionar roles de usuarios: Administrador o Usuario</p>
 
-      <button mat-raised-button color="primary" class="action-btn">Gestionar Usuarios</button>
+      <button mat-raised-button color="primary" class="action-btn" [routerLink]="['/admin/users']">
+        Gestionar Usuarios
+      </button>
     </div>
     <div class="card">
       <div class="icon-wrapper blue-bg">
