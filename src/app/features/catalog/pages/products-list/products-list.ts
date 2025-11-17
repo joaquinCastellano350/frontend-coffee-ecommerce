@@ -50,6 +50,8 @@ export class ProductsList {
   limit = signal(10);
   loading = signal(true);
   categories = signal<{ name: string; slug: string; _id: string }[]>([]);
+  dialog = inject(MatDialog);
+  snack = inject(MatSnackBar);
 
   filters = this.fb.group({
     category: [''],
@@ -57,10 +59,7 @@ export class ProductsList {
     name: [''],
   });
 
-  constructor(
-    private dialog: MatDialog,
-    private snack: MatSnackBar,
-  ) {
+  constructor() {
     this.service.getCategories().subscribe((cats) => {
       this.categories.set(cats);
     });
