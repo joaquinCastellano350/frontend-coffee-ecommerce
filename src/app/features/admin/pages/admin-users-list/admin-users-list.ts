@@ -55,23 +55,32 @@ export class AdminUsersList {
       { emitEvent: false },
     );
     this.filters.valueChanges.pipe(debounceTime(250)).subscribe((v) => {
-      console.log(v);
+      this.router.navigate([], {
+        queryParams: { ...v },
+      });
+      this.loadUsers();
     });
     this.loadUsers();
   }
 
   loadUsers() {
     this.loading.set(true);
-    this.service.getUsers().subscribe({
-      next: (users) => {
-        this.users.set(users);
-        this.loading.set(false);
-      },
-      error: (error) => {
-        console.error('Error al cargar los usuarios: ', error);
-        this.loading.set(false);
-      },
-    });
+    const { email, role } = this.filters.value;
+    this.service
+      .getUsers({
+        email: email || undefined,
+        role: (role as 'admin' | 'user') || undefined,
+      })
+      .subscribe({
+        next: (users) => {
+          this.users.set(users);
+          this.loading.set(false);
+        },
+        error: (error) => {
+          console.error('Error al cargar los usuarios: ', error);
+          this.loading.set(false);
+        },
+      });
   }
 
   async changeRole(user: string, role: 'admin' | 'user') {

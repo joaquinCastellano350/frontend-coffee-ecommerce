@@ -9,8 +9,9 @@
     <mat-form-field class="filter-select">
       <mat-label>Rol</mat-label>
       <mat-select formControlName="role">
-        <mat-option>Administrador</mat-option>
-        <mat-option>Usuario</mat-option>
+        <mat-option value=""> Todos</mat-option>
+        <mat-option value="admin">Administrador</mat-option>
+        <mat-option value="user">Usuario</mat-option>
       </mat-select>
     </mat-form-field>
   </form>
@@ -34,6 +35,6 @@
   </table>
 
   <div class="empty" *ngIf="!loading() && !users().length">
-    <p>No hay productos registrados.</p>
+    <p>No se encuentran Usuarios.</p>
   </div>
 </div>
