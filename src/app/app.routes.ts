@@ -11,12 +11,13 @@ import { AdminFormsList } from './features/admin/pages/admin-forms-list/admin-fo
 import { AdminDashboard } from './features/admin/pages/admin-dashboard/admin-dashboard';
 import { AdminUsersList } from './features/admin/pages/admin-users-list/admin-users-list';
 import { AdminStats } from './features/admin/pages/admin-stats/admin-stats';
+import { loginGuard } from './core/auth/login-guard';
 
 export const routes: Routes = [
   { path: '', component: ProductsList },
   { path: 'product/:id', component: ProductDetail },
   { path: 'wishlist', component: WishlistPage },
-  { path: 'login', component: LoginPage, data: { mode: 'login' } },
+  { path: 'login', canActivate: [loginGuard], component: LoginPage, data: { mode: 'login' } },
   { path: 'register', component: LoginPage, data: { mode: 'register' } },
   {
     path: 'admin',
