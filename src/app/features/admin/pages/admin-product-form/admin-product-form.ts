@@ -10,7 +10,7 @@ import { ProductsService } from '../../../catalog/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateProductDTO, UpdateProductDTO } from '../../../../shared/models/product.model';
 import { CategoriesService } from '../../services/categories.service';
-import { CatalogsService } from '../../services/catalogs.servicec';
+import { CatalogsService } from '../../services/catalogs.service';
 import { QuickCreateDialogComponent } from '../../components/quick-create-dialog-component/quick-create-dialog-component';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog-component/confirm-dialog-component';
 import { MatDialog } from '@angular/material/dialog';
