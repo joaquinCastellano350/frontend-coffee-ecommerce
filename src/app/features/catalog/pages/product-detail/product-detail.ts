@@ -3,7 +3,7 @@ import { ProductsService } from '../../products.service';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../../../shared/models/product.model';
 import { MatIcon } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFabButton } from '@angular/material/button';
@@ -14,7 +14,7 @@ import { InterestForm } from '../../components/interest-form/interest-form';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [MatIcon, NgIf, MatCardModule, MatProgressSpinnerModule, MatFabButton],
+  imports: [MatIcon, NgIf, NgFor, MatCardModule, MatProgressSpinnerModule, MatFabButton],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
 })
