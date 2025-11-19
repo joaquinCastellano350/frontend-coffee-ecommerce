@@ -90,7 +90,9 @@
       </div>
 
       <div class="actions">
-        <a mat-stroked-button color="primary" href="/admin/products">Cancelar</a>
+        <button mat-stroked-button color="primary" [routerLink]="['/admin/products']">
+          Cancelar
+        </button>
         <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">
           {{ isEdit() ? 'Guardar cambios' : 'Crear producto' }}
         </button>

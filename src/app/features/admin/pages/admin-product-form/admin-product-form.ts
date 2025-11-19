@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProductsService } from '../../../catalog/products.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CreateProductDTO, UpdateProductDTO } from '../../../../shared/models/product.model';
 import { CategoriesService } from '../../services/categories.service';
 import { CatalogsService } from '../../services/catalogs.service';
@@ -30,6 +30,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
     MatSnackBarModule,
     MatChipsModule,
     MatIconModule,
+    RouterLink,
   ],
   templateUrl: './admin-product-form.html',
   styleUrl: './admin-product-form.css',
