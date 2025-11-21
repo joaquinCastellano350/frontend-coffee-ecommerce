@@ -12,6 +12,8 @@ import { AdminDashboard } from './features/admin/pages/admin-dashboard/admin-das
 import { AdminUsersList } from './features/admin/pages/admin-users-list/admin-users-list';
 import { AdminStats } from './features/admin/pages/admin-stats/admin-stats';
 import { loginGuard } from './core/auth/login-guard';
+import { AdminCatalogsList } from './features/admin/pages/admin-catalogs-list/admin-catalogs-list';
+import { AdminCatalogForm } from './features/admin/pages/admin-catalog-form/admin-catalog-form';
 
 export const routes: Routes = [
   { path: '', component: ProductsList },
@@ -27,6 +29,9 @@ export const routes: Routes = [
       { path: 'stats', component: AdminStats },
       { path: 'users', component: AdminUsersList },
       { path: 'forms', component: AdminFormsList },
+      { path: 'catalogs', component: AdminCatalogsList },
+      { path: 'catalogs/new', component: AdminCatalogForm },
+      { path: 'catalogs/edit/:id', component: AdminCatalogForm },
       { path: 'products', component: AdminProductsList },
       { path: 'products/new', component: AdminProductForm },
       { path: 'products/edit/:id', component: AdminProductForm },

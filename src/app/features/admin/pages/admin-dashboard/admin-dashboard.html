@@ -51,7 +51,14 @@
       <h3>Catálogos</h3>
       <p class="description">Administrar catálogos: Crear, editar, visibilidad</p>
 
-      <button mat-raised-button color="primary" class="action-btn">Gestionar Catálogos</button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="action-btn"
+        [routerLink]="['/admin/catalogs']"
+      >
+        Gestionar Catálogos
+      </button>
     </div>
 
     <div class="card">

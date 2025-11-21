@@ -18,6 +18,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { Catalog } from '../../../../shared/models/catalog.model';
 @Component({
   selector: 'app-admin-product-form',
   imports: [
@@ -46,7 +47,7 @@ export class AdminProductForm implements OnInit {
   private snack = inject(MatSnackBar);
 
   categories = signal<{ name: string; slug: string; _id: string }[]>([]);
-  catalogs = signal<{ name: string; slug: string; _id: string; visible: boolean }[]>([]);
+  catalogs = signal<Catalog[]>([]);
 
   private lastCategoryId: string | null = null;
   private lastCatalogId: string | null = null;
@@ -97,6 +98,7 @@ export class AdminProductForm implements OnInit {
         });
       },
       (error) => {
+        console.error(error);
         this.snack.open('Error al cargar el producto', 'Cerrar', { duration: 3000 });
       },
     );
@@ -185,6 +187,7 @@ export class AdminProductForm implements OnInit {
       this.snack.open('Catálogo activado', 'Cerrar', { duration: 2000 });
       return true;
     } catch (error) {
+      console.error(error);
       this.snack.open('Error al activar el catálogo', 'Cerrar', { duration: 3000 });
       return false;
     }
@@ -202,7 +205,7 @@ export class AdminProductForm implements OnInit {
       return;
     }
 
-    this.catalogService.createCatalog(name).subscribe({
+    this.catalogService.createCatalog({ name }).subscribe({
       next: (cat) => {
         this.catalogs.set([...this.catalogs(), cat]);
         this.form.patchValue({ catalog_id: cat._id });
