@@ -9,6 +9,7 @@ export interface QuickCreateDialogData {
   title: string;
   placeholder: string;
   confirmButtonText: string;
+  value?: string;
 }
 
 @Component({
@@ -23,7 +24,7 @@ export class QuickCreateDialogComponent {
   fb = inject(FormBuilder);
 
   f = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
+    name: [this.data.value ?? '', [Validators.required, Validators.minLength(3)]],
   });
 
   close() {

@@ -68,7 +68,12 @@
       <h3>Categorías</h3>
       <p class="description">Administrar categorías: Crear y editar categorías de los productos</p>
 
-      <button mat-raised-button color="primary" class="action-btn">Gestionar Categorías</button>
+    <button 
+      mat-raised-button color="primary" 
+      class="action-btn"
+      [routerLink]="['/admin/categories']"
+      >
+      Gestionar Categorías</button>
     </div>
 
     <div class="card">
