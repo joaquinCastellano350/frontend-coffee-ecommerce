@@ -51,8 +51,6 @@ export class ProductsList {
   limit = signal(10);
   loading = signal(true);
   categories = signal<{ name: string; slug: string; _id: string }[]>([]);
-  dialog = inject(MatDialog);
-  snack = inject(MatSnackBar);
 
   filters = this.fb.group({
     category: [''],

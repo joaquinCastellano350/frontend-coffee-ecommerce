@@ -59,7 +59,7 @@ export class AdminCatalogForm implements OnInit {
   ngOnInit() {
     this.catalogForm = this.fb.group({
       name: ['', Validators.required],
-      description: [null],
+      description: [''],
       startedAt: [null],
       endedAt: [null],
     }) as FormGroup<ICatalogForm>;
