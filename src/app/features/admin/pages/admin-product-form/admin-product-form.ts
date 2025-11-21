@@ -61,8 +61,8 @@ export class AdminProductForm implements OnInit {
   form = this.fb.group({
     name: ['', Validators.required],
     brand: [''],
-    category_id: [''],
-    catalog_id: [''],
+    category_id: ['', Validators.required],
+    catalog_id: ['', Validators.required],
     description: [''],
     price: [0, Validators.min(0)],
     stock: [0, Validators.min(0)],
