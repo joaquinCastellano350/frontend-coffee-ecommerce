@@ -51,7 +51,14 @@
       <h3>Catálogos</h3>
       <p class="description">Administrar catálogos: Crear, editar, visibilidad</p>
 
-      <button mat-raised-button color="primary" class="action-btn">Gestionar Catálogos</button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="action-btn"
+        [routerLink]="['/admin/catalogs']"
+      >
+        Gestionar Catálogos
+      </button>
     </div>
 
     <div class="card">
@@ -76,7 +83,9 @@
       <h3>Usuarios</h3>
       <p class="description">Gestionar roles de usuarios: Administrador o Usuario</p>
 
-      <button mat-raised-button color="primary" class="action-btn">Gestionar Usuarios</button>
+      <button mat-raised-button color="primary" class="action-btn" [routerLink]="['/admin/users']">
+        Gestionar Usuarios
+      </button>
     </div>
     <div class="card">
       <div class="icon-wrapper blue-bg">
@@ -85,7 +94,9 @@
       <h3>Resumen del Negocio</h3>
       <p class="description">Ver estadísticas e Información del Negocio</p>
 
-      <button mat-raised-button color="primary" class="action-btn">Ver resumen</button>
+      <button mat-raised-button color="primary" class="action-btn" [routerLink]="['/admin/stats']">
+        Ver resumen
+      </button>
     </div>
   </div>
 </div>

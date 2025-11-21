@@ -70,7 +70,7 @@
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
   object-fit: cover;
 }
-
+/*
 .toolbar {
   display: flex;
   gap: 16px;
@@ -84,6 +84,7 @@
   letter-spacing: 0.2px;
   font-size: clamp(1rem, -0.25rem + 4vw, 2rem);
 }
+*/
 .filters {
   display: flex;
   gap: 16px;

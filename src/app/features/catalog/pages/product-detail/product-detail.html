@@ -20,8 +20,8 @@
             {{ product()?.description }}
           </p>
 
-          <div class="tags" *ngIf="product()?.tags">
-            <span class="tag">{{ product()?.tags }}</span>
+          <div class="tags" *ngFor="let tag of product()?.tags">
+            <span class="tag">{{ tag }}</span>
           </div>
 
           <div class="price-stock">

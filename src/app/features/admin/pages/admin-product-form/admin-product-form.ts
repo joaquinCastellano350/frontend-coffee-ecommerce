@@ -7,10 +7,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProductsService } from '../../../catalog/products.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CreateProductDTO, UpdateProductDTO } from '../../../../shared/models/product.model';
 import { CategoriesService } from '../../services/categories.service';
-import { CatalogsService } from '../../services/catalogs.servicec';
+import { CatalogsService } from '../../services/catalogs.service';
 import { QuickCreateDialogComponent } from '../../components/quick-create-dialog-component/quick-create-dialog-component';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog-component/confirm-dialog-component';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,6 +18,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { Catalog } from '../../../../shared/models/catalog.model';
 @Component({
   selector: 'app-admin-product-form',
   imports: [
@@ -30,6 +31,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
     MatSnackBarModule,
     MatChipsModule,
     MatIconModule,
+    RouterLink,
   ],
   templateUrl: './admin-product-form.html',
   styleUrl: './admin-product-form.css',
@@ -45,7 +47,7 @@ export class AdminProductForm implements OnInit {
   private snack = inject(MatSnackBar);
 
   categories = signal<{ name: string; slug: string; _id: string }[]>([]);
-  catalogs = signal<{ name: string; slug: string; _id: string; visible: boolean }[]>([]);
+  catalogs = signal<Catalog[]>([]);
 
   private lastCategoryId: string | null = null;
   private lastCatalogId: string | null = null;
@@ -96,6 +98,7 @@ export class AdminProductForm implements OnInit {
         });
       },
       (error) => {
+        console.error(error);
         this.snack.open('Error al cargar el producto', 'Cerrar', { duration: 3000 });
       },
     );
@@ -184,6 +187,7 @@ export class AdminProductForm implements OnInit {
       this.snack.open('Catálogo activado', 'Cerrar', { duration: 2000 });
       return true;
     } catch (error) {
+      console.error(error);
       this.snack.open('Error al activar el catálogo', 'Cerrar', { duration: 3000 });
       return false;
     }
@@ -201,7 +205,7 @@ export class AdminProductForm implements OnInit {
       return;
     }
 
-    this.catalogService.createCatalog(name).subscribe({
+    this.catalogService.createCatalog({ name }).subscribe({
       next: (cat) => {
         this.catalogs.set([...this.catalogs(), cat]);
         this.form.patchValue({ catalog_id: cat._id });
