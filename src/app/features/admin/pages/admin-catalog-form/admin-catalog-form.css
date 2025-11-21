@@ -1,0 +1,31 @@
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.dates {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dates mat-form-field {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

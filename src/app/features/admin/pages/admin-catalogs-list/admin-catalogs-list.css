@@ -1,0 +1,29 @@
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px;
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+th.mat-header-cell {
+  background: #f7f7f7;
+  font-weight: 600;
+}
+td.mat-cell,
+th.mat-header-cell {
+  padding: 12px;
+}
+.empty {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 40px;
+}

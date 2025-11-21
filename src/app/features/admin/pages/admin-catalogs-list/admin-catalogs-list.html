@@ -1,0 +1,45 @@
+<div class="page">
+  <header class="toolbar">
+    <h1>Administrar Catálogos</h1>
+    <button mat-raised-button color="primary" (click)="goNew()">
+      <mat-icon>add</mat-icon> Nuevo Catálogo
+    </button>
+  </header>
+
+  <table mat-table [dataSource]="catalogs()" class="mat-elevation-z1">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let c">{{ c.name }}</td>
+    </ng-container>
+    <ng-container matColumnDef="totalProducts">
+      <th mat-header-cell *matHeaderCellDef>Productos</th>
+      <td mat-cell *matCellDef="let c">{{ c.totalProducts }}</td>
+    </ng-container>
+    <ng-container matColumnDef="startedAt">
+      <th mat-header-cell *matHeaderCellDef>Inicio</th>
+      <td mat-cell *matCellDef="let c">{{ c.startedAt | date: 'dd/MM/yyyy' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="endedAt">
+      <th mat-header-cell *matHeaderCellDef>Fin</th>
+      <td mat-cell *matCellDef="let c">{{ c.endedAt | date: 'dd/MM/yyyy' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let c">
+        <button mat-icon-button color="primary" matTooltip="Editar" (click)="goEdit(c._id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="!c.visible ? enableCatalog(c._id) : disableCatalog(c._id)">
+          <mat-icon>{{ c.visible ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <div class="empty" *ngIf="!loading() && !catalogs().length">
+    <p>No hay catálogos registrados.</p>
+  </div>
+</div>
