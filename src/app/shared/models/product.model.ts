@@ -34,3 +34,9 @@ export interface UpdateProductDTO {
   catalog_id?: string;
   tags?: string[];
 }
+
+export interface CountedProductDTO {
+  count: number;
+  name: string;
+  imageURL?: string;
+}

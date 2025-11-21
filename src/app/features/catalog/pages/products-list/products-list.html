@@ -1,12 +1,43 @@
 <div class="page">
-  <header class="toolbar">
-    <h1 class="toolbar-title">Catálogo de Productos</h1>
+  <section *ngIf="this.page() === 1" class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Descubrí el mejor café</h1>
+        <p>
+          Equipos de espresso, café en grano y accesorios seleccionados para que armes tu barista
+          station en casa o en tu negocio.
+        </p>
+
+        <div class="hero-actions">
+          <button mat-raised-button color="primary" (click)="scrollToCatalog()">
+            Ver catálogo
+          </button>
+
+          <button mat-stroked-button color="primary" routerLink="/wishlist">
+            Ver mi lista de deseos
+          </button>
+        </div>
+
+        <div class="hero-badges">
+          <span> Productos seleccionados</span>
+          <span> Envíos a todo el país</span>
+          <span> Atención Personalizada</span>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="hero-coffee.jpg" alt="Máquina de café espresso" />
+      </div>
+    </div>
+  </section>
+  <section id="catalog-section" class="catalog-section">
+    <h1 class="toolbar-title">Nuestros productos</h1>
     <form [formGroup]="filters" class="filters" (submit)="$event.preventDefault()">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="filter-input">
         <mat-label>Buscar</mat-label>
         <input matInput formControlName="name" placeholder="Nombre" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="filter-select">
         <mat-label> Categoria </mat-label>
         <mat-select formControlName="category">
           <mat-option value="">Todas</mat-option>
@@ -14,14 +45,14 @@
         </mat-select>
       </mat-form-field>
     </form>
-  </header>
-  <app-product-list-component [products]="products()"></app-product-list-component>
-  <div class="actions">
-    <button matFab (click)="openForm()" aria-label="Contactar"><mat-icon>call</mat-icon></button>
-    <button matFab [routerLink]="['/wishlist']" aria-label="Lista de deseos">
-      <mat-icon>favorite</mat-icon>
-    </button>
-  </div>
+    <app-product-list-component [products]="products()"></app-product-list-component>
+    <div class="actions">
+      <button matFab (click)="openForm()" aria-label="Contactar"><mat-icon>call</mat-icon></button>
+      <button matFab [routerLink]="['/wishlist']" aria-label="Lista de deseos">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+  </section>
   <nav class="pager" *ngIf="total() > limit()">
     <button mat-button (click)="goPage(page() - 1)" [disabled]="page() <= 1">Anterior</button>
     <span>Pagina {{ page() }}</span>

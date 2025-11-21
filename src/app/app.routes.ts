@@ -8,21 +8,35 @@ import { AdminProductForm } from './features/admin/pages/admin-product-form/admi
 import { authGuard } from './core/auth/auth.guard';
 import { adminGuard } from './core/auth/admin.guard';
 import { AdminFormsList } from './features/admin/pages/admin-forms-list/admin-forms-list';
+import { AdminDashboard } from './features/admin/pages/admin-dashboard/admin-dashboard';
+import { AdminCategoriesList } from './features/admin/pages/admin-category-list/admin-category-list'; 
+import { AdminUsersList } from './features/admin/pages/admin-users-list/admin-users-list';
+import { AdminStats } from './features/admin/pages/admin-stats/admin-stats';
+import { loginGuard } from './core/auth/login-guard';
+import { AdminCatalogsList } from './features/admin/pages/admin-catalogs-list/admin-catalogs-list';
+import { AdminCatalogForm } from './features/admin/pages/admin-catalog-form/admin-catalog-form';
 
 export const routes: Routes = [
   { path: '', component: ProductsList },
   { path: 'product/:id', component: ProductDetail },
   { path: 'wishlist', component: WishlistPage },
-  { path: 'login', component: LoginPage, data: { mode: 'login' } },
+  { path: 'login', canActivate: [loginGuard], component: LoginPage, data: { mode: 'login' } },
   { path: 'register', component: LoginPage, data: { mode: 'register' } },
   {
     path: 'admin',
     canMatch: [authGuard, adminGuard],
     children: [
+      { path: '', pathMatch: 'full', component: AdminDashboard },
+      { path: 'stats', component: AdminStats },
+      { path: 'users', component: AdminUsersList },
       { path: 'forms', component: AdminFormsList },
+      { path: 'catalogs', component: AdminCatalogsList },
+      { path: 'catalogs/new', component: AdminCatalogForm },
+      { path: 'catalogs/edit/:id', component: AdminCatalogForm },
       { path: 'products', component: AdminProductsList },
       { path: 'products/new', component: AdminProductForm },
       { path: 'products/edit/:id', component: AdminProductForm },
+      { path: 'categories', component: AdminCategoriesList }
     ],
   },
   { path: '**', redirectTo: '' },

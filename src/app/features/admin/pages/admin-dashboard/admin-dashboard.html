@@ -1,0 +1,102 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div>
+      <h1>Admin Dashboard</h1>
+      <p class="subtitle">Panel de gestión del negocio</p>
+    </div>
+
+    <div class="user-chip" *ngIf="auth.user()">
+      <mat-icon class="user-icon">account_circle</mat-icon>
+      <div>
+        <span class="user-name">{{ auth.user()!.email }}</span>
+        <span class="user-role">Administrador</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="icon-wrapper blue-bg">
+        <mat-icon class="icon">local_mall</mat-icon>
+      </div>
+      <h3>Productos</h3>
+      <p class="description">Gestioná todos los productos del catálogo.</p>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="action-btn"
+        [routerLink]="['/admin/products']"
+      >
+        Administrar productos
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="icon-wrapper purple-bg">
+        <mat-icon class="icon">mail</mat-icon>
+      </div>
+      <h3>Consultas de usuarios</h3>
+      <p class="description">Revisá los formularios de interés enviados por los clientes.</p>
+
+      <button mat-raised-button color="accent" class="action-btn" [routerLink]="['/admin/forms']">
+        Ver consultas
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="icon-wrapper green-bg">
+        <mat-icon class="icon">inventory_2</mat-icon>
+      </div>
+      <h3>Catálogos</h3>
+      <p class="description">Administrar catálogos: Crear, editar, visibilidad</p>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="action-btn"
+        [routerLink]="['/admin/catalogs']"
+      >
+        Gestionar Catálogos
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="icon-wrapper purple-bg">
+        <mat-icon class="icon">local_offer</mat-icon>
+      </div>
+      <h3>Categorías</h3>
+      <p class="description">Administrar categorías: Crear y editar categorías de los productos</p>
+
+    <button 
+      mat-raised-button color="primary" 
+      class="action-btn"
+      [routerLink]="['/admin/categories']"
+      >
+      Gestionar Categorías</button>
+    </div>
+
+    <div class="card">
+      <div class="icon-wrapper green-bg">
+        <mat-icon class="icon">supervisor_account</mat-icon>
+      </div>
+      <h3>Usuarios</h3>
+      <p class="description">Gestionar roles de usuarios: Administrador o Usuario</p>
+
+      <button mat-raised-button color="primary" class="action-btn" [routerLink]="['/admin/users']">
+        Gestionar Usuarios
+      </button>
+    </div>
+    <div class="card">
+      <div class="icon-wrapper blue-bg">
+        <mat-icon class="icon">assessment</mat-icon>
+      </div>
+      <h3>Resumen del Negocio</h3>
+      <p class="description">Ver estadísticas e Información del Negocio</p>
+
+      <button mat-raised-button color="primary" class="action-btn" [routerLink]="['/admin/stats']">
+        Ver resumen
+      </button>
+    </div>
+  </div>
+</div>
