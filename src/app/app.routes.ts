@@ -9,6 +9,7 @@ import { authGuard } from './core/auth/auth.guard';
 import { adminGuard } from './core/auth/admin.guard';
 import { AdminFormsList } from './features/admin/pages/admin-forms-list/admin-forms-list';
 import { AdminDashboard } from './features/admin/pages/admin-dashboard/admin-dashboard';
+import { AdminCategoriesList } from './features/admin/pages/admin-category-list/admin-category-list'; 
 
 export const routes: Routes = [
   { path: '', component: ProductsList },
@@ -25,6 +26,7 @@ export const routes: Routes = [
       { path: 'products', component: AdminProductsList },
       { path: 'products/new', component: AdminProductForm },
       { path: 'products/edit/:id', component: AdminProductForm },
+      { path: 'categories', component: AdminCategoriesList }
     ],
   },
   { path: '**', redirectTo: '' },

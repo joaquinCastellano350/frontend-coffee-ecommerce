@@ -9,4 +9,30 @@ export class CategoriesService extends BaseHttpService {
       { name },
     );
   }
+
+  getAllCategories() {
+    return this.http.get<{ name: string; slug: string; _id: string }[]>(
+      `${this.baseUrl}/categories`
+    );
+  }
+
+  getCategoryById(id: string) {
+    return this.http.get<{ name: string; slug: string; _id: string }>(
+      `${this.baseUrl}/categories/${id}`
+    );
+  }
+
+  updateCategory(id: string, name: string) {
+    return this.http.put<{ name: string; slug: string; _id: string }>(
+      `${this.baseUrl}/categories/${id}`,
+      { name }
+    );
+  }
+
+  deleteCategory(id: string) {
+    return this.http.delete<void>(
+      `${this.baseUrl}/categories/${id}`
+    );
+  }
 }
+
